@@ -55,6 +55,27 @@ namespace ShrimpFlourControl
             return result;
         }
 
+        public bool SaveToDatabase()
+        {
+            int result = 0;
+            result += _dataBase.SaveAllNodes(Nodes) ? 1 : 0;
+            result += _dataBase.SaveAllAGVs(AGVs) ? 1 : 0;
+            result += _dataBase.SaveAllPaths(Paths) ? 1 : 0;
+            result += _dataBase.SaveAllStations(Stations) ? 1 : 0;
+            if (result != 4)
+            {
+                return false;
+                //MessageBox.Show("Saved to database", "warnning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else return true;
+        }
+
+        public bool ClearAllTables()
+        {
+            var result = _dataBase.ClearAllMDFKTables();
+            return result;
+        }
+
         #region Debug Fucntions
         public void DebugPrint(string msg)
         {

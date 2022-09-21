@@ -225,7 +225,7 @@ namespace ShrimpFlourControl.Visualizations
                             graphics.DrawImage(Properties.Resources.charging_station, new Rectangle(new Point(StationLocationX - width / 2, StationLocationY - height / 2), new Size(width, height)));
                             break;
                         default:
-                            graphics.DrawImage(Properties.Resources.workstation, new Rectangle(new Point(StationLocationX - width / 2, StationLocationY - height / 2), new Size(width, height)));
+                            graphics.DrawIcon(Properties.Resources.workstation, new Rectangle(new Point(StationLocationX - width / 2, StationLocationY - height / 2), new Size(width, height)));//DrawImage
                             break;
                     }
 

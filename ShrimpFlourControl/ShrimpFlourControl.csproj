@@ -278,5 +278,11 @@
   <ItemGroup>
     <None Include="Resources\factory_cad.PNG" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightcorner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RIGHTCORNER1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

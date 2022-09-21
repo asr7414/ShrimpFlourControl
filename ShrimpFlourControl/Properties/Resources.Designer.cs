@@ -63,6 +63,16 @@ namespace ShrimpFlourControl.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap _1662633170088 {
+            get {
+                object obj = ResourceManager.GetObject("1662633170088", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap _3axis_VCP60 {
             get {
                 object obj = ResourceManager.GetObject("_3axis_VCP60", resourceCulture);
@@ -333,6 +343,26 @@ namespace ShrimpFlourControl.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap rightcorner {
+            get {
+                object obj = ResourceManager.GetObject("rightcorner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap RIGHTCORNER1 {
+            get {
+                object obj = ResourceManager.GetObject("RIGHTCORNER1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap rotate {
             get {
                 object obj = ResourceManager.GetObject("rotate", resourceCulture);
@@ -493,10 +523,10 @@ namespace ShrimpFlourControl.Properties {
         /// <summary>
         ///   查詢類似 (圖示) 的類型 System.Drawing.Icon 當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap workstation {
+        internal static System.Drawing.Icon workstation {
             get {
                 object obj = ResourceManager.GetObject("workstation", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

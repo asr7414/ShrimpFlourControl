@@ -21,7 +21,9 @@ namespace ShrimpFlourControl
     {
         private readonly MapDrawer _mapDrawer;
         public SFCServer SFC { get; }
-        
+
+        private readonly Database _dataBase;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +32,7 @@ namespace ShrimpFlourControl
             mapRefreshTimer.Enabled = true;
             var fiveAxis = new FiveAxisCNC(123, new Maps.Node(12, 1, 1), 10, 10);
         }
+
 
         #region ToolStrip Menu Item Click Events
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -44,6 +47,46 @@ namespace ShrimpFlourControl
                 ShowError("Dailed to connect to database!");
             }
         }
+
+        private void open_file_from_dbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = this.SFC.ConnectToDatabase();
+            if (result)
+            {
+                ShowInfo("Connected to database!");
+            }
+            else
+            {
+                ShowError("Dailed to connect to database!");
+            }
+        }
+
+        private void save_to_dbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = this.SFC.SaveToDatabase();
+            if (result)
+            {
+                ShowInfo("Save to database!");
+            }
+            else
+            {
+                ShowError("Fail to save to database!");
+            }
+        }
+
+        private void clear_dbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = this.SFC.ClearAllTables();
+            if (result)
+            {
+                ShowInfo("Save to database!");
+            }
+            else
+            {
+                ShowError("Fail to save to database!");
+            }
+        }
+
         #endregion
 
         #region MapViewer Callbacks
@@ -82,9 +125,12 @@ namespace ShrimpFlourControl
 
 
 
+
+
+
         #endregion
 
-       
+
     }
 }
 
