@@ -18,7 +18,7 @@ namespace ShrimpFlourControl.Stations
             return true;
         }
 
-        public void  StartMan()
+        public void StartMan()
         {
             
         }

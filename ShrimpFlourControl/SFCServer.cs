@@ -8,6 +8,7 @@ using ShrimpFlourControl.Maps;
 using ShrimpFlourControl.Stations;
 using ShrimpFlourControl.Vehicles;
 using ShrimpFlourControl.PathPlanner;
+using ShrimpFlourControl.Missions;
 
 namespace ShrimpFlourControl
 {
@@ -21,6 +22,7 @@ namespace ShrimpFlourControl
         public List<Path> Paths { get; private set; }
         public List<AGV> AGVs { get; private set; }
         public List<Station> Stations { get; private set; }
+        public List<Mission> Missions { get; set; }
         public Node SelectedNode { get; set; }
         public Node SelectedPathNode1 { get; set; }
         public Node SelectedPathNode2 { get; set; }
@@ -50,6 +52,7 @@ namespace ShrimpFlourControl
                 AGVs = _dataBase.GetAllAGVs(Nodes);
                 Paths = _dataBase.GetAllPaths(Nodes);
                 Stations = _dataBase.GetAllStations(Nodes);
+                Missions = _dataBase.GetAllMissions();
             }
 
             return result;

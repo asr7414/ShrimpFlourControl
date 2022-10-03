@@ -101,6 +101,8 @@
     </Compile>
     <Compile Include="Maps\Node.cs" />
     <Compile Include="Maps\Path.cs" />
+    <Compile Include="Missions\Mission.cs" />
+    <Compile Include="Missions\MissionHandler.cs" />
     <Compile Include="PathPlanner\AStarPlanner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Stations\ThreeAxisCNC.cs" />
     <Compile Include="Stations\WIP.cs" />
     <Compile Include="Vehicles\AGV.cs" />
+    <Compile Include="Vehicles\AGVHandler.cs" />
     <Compile Include="Vehicles\RealAGV.cs" />
     <Compile Include="Vehicles\SimulatedAGV.cs" />
     <Compile Include="Visualizations\MapDrawer.cs" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ShrimpFlourControl.Maps;
+using ShrimpFlourControl.Missions;
 
 namespace ShrimpFlourControl.Stations
 {
@@ -21,6 +22,13 @@ namespace ShrimpFlourControl.Stations
             Rack,
             ChargeStation,
         }
+        public enum StationStatus
+        {
+            Idle = 0,
+            Loading = 1,
+            Processing = 2,
+            Unloading = 3
+        }
         #endregion
 
         public int ID { get; }
@@ -28,8 +36,8 @@ namespace ShrimpFlourControl.Stations
         public int OffsetX { get; set; }
         public int OffsetY { get; set; }
         public StationType Type { get; }
-
-
+        public StationStatus Status { get; } = StationStatus.Idle;
+        public int PrcoessingTime { get; set; }
         protected Station(int id, Node refererNode, int offsetX, int offsetY, StationType type)
         {
             this.ID = id;
@@ -67,5 +75,6 @@ namespace ShrimpFlourControl.Stations
 
             return pt;
         }
+        public List<Mission> ReservedMissionList { get; set; } = new List<Mission>();
     }
 }

@@ -25,10 +25,10 @@ namespace ShrimpFlourControl.Vehicles
         #endregion
 
         public int ID { get; private protected set; }
-        public float X { get; private protected set; }
-        public float Y { get; private protected set; }
+        public float X { get; set; } // private protected (為啥)
+        public float Y { get; set; } // private protected (為啥)
 
-        public Node CurrentNode { get; private protected set; }
+        public Node CurrentNode { get; set; } // private protected (為啥)
 
         public AGVStates State { get; private protected set;  }
 

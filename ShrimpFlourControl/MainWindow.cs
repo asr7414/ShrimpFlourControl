@@ -12,8 +12,7 @@ using ShrimpFlourControl.Visualizations;
 using ShrimpFlourControl.Communications;
 using ShrimpFlourControl.Vehicles;
 using ShrimpFlourControl.Stations;
-
-
+using ShrimpFlourControl.Missions;
 
 namespace ShrimpFlourControl
 {
@@ -23,6 +22,21 @@ namespace ShrimpFlourControl
         public SFCServer SFC { get; }
 
         private readonly Database _dataBase;
+        private EditMode editMode;
+        private Station.StationType stationType;
+        public enum EditMode
+        {
+            AddCar,
+            AddStation,
+            SelectMode,
+            DeleteMode,
+            MoveCar,
+            Node,
+            DrawLine,
+            DrawCurve90,
+            DrawCurveAny,
+            PathSimulation,
+        }
 
         public MainWindow()
         {
@@ -87,6 +101,32 @@ namespace ShrimpFlourControl
             }
         }
 
+        private void draw_gridtoolStripButton_Click(object sender, EventArgs e)
+        {
+            //gridState = true;
+
+            //var bitMap = new Bitmap(Grid_picturebox.Width, Grid_picturebox.Height);
+            //using (var g = Graphics.FromImage(bitMap))
+            //{
+            //    float startx, starty, endx, endy;
+            //    startx = 0;
+            //    starty = 0;
+            //    endx = canvasSize.Width;
+            //    endy = canvasSize.Height;
+
+            //    for (int i = 1; i < canvasSize.Width; i++)
+            //    {
+            //        g.DrawLine(new Pen(Color.FromArgb(128, 220, 220, 220), 1), (startx + initialgridsize) * i * gridscale, starty * i * gridscale, (startx + initialgridsize) * i * gridscale, endy * i * gridscale);
+            //        for (int j = 1; j < canvasSize.Height; j++)
+            //        {
+            //            g.DrawLine(new Pen(Color.FromArgb(128, 220, 220, 220), 1), startx * j * gridscale, (starty + initialgridsize) * j * gridscale, endx * j * gridscale, (starty + initialgridsize) * j * gridscale);
+            //        }
+            //    }
+            //}
+            //Grid_button.Enabled = false;
+            //Grid_picturebox.Image = bitMap;
+        }
+
         #endregion
 
         #region MapViewer Callbacks
@@ -128,9 +168,81 @@ namespace ShrimpFlourControl
 
 
 
+
+
         #endregion
 
+        #region 模式設定
+        private void selecttoolStripButton_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.SelectMode;
+        }
 
+        private void delete_itemtoolStripButton_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.DeleteMode;
+        }
+        
+        private void add_right_cornertoolStripButton_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.DrawCurve90;
+        }
+        private void add_straight_pathtoolStripButton_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.DrawLine;
+        }
+
+        private void add_bend_pathtoolStripButton_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.DrawCurveAny;
+        }
+
+        private void add_agvtoolStripButton_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.AddCar;
+        }
+        private void 五軸加工機ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.AddStation;
+            stationType = Station.StationType.FiveAxisCNC;
+        }
+
+        private void 三軸加工機ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.AddStation;
+            stationType = Station.StationType.ThreeAxisCNC;
+        }
+
+        private void 原料倉ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editMode = EditMode.AddStation;
+            //stationType = Station.StationType.;
+        }
+
+        private void 出貨倉ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 再製品倉ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 無人車充電站ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        #endregion
+
+        private void testRunToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MissionHandler missionHandler = new MissionHandler(this.SFC);
+            List<int> goodSequence = new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
+            missionHandler.RunMissionList(goodSequence);
+        }
     }
 }
 

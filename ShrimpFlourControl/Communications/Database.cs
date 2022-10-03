@@ -9,6 +9,8 @@ using MySql.Data.MySqlClient;
 using ShrimpFlourControl.Maps;
 using ShrimpFlourControl.Vehicles;
 using ShrimpFlourControl.Stations;
+using ShrimpFlourControl.Missions;
+using System.Data;
 
 namespace ShrimpFlourControl.Communications
 {
@@ -60,6 +62,51 @@ namespace ShrimpFlourControl.Communications
             }
 
             return false;
+        }
+
+        public List<Mission> GetAllMissions()
+        {
+            const string sqlString = "SELECT * FROM `ProductionStation` WHERE 1";
+            MySqlCommand sqlCmd = new MySqlCommand(sqlString, _mySqlConnection);
+            MySqlDataReader dataReader = sqlCmd.ExecuteReader();
+            List<Mission> list = new List<Mission>();
+            
+            try
+            {
+                var oldProductId = 0;
+                while (dataReader.Read())
+                {
+                    var ProductId = dataReader.GetInt32(0);
+                    var StationId = dataReader.GetInt32(1);
+                    var StationProcessTime = dataReader.GetInt32(2);
+                    if (oldProductId != ProductId)
+                    {
+                        Mission mission = new Mission()
+                        {
+                            Id = ProductId,
+                        };
+                        //mission.StationRouter.Add()
+
+                        list.Add(mission);
+                    }
+                    else
+                    {
+
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                dataReader.Close();
+            }
+
+            return list;
         }
 
         public List<Node> GetAllNodes()
