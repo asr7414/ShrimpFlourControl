@@ -226,6 +226,7 @@ namespace ShrimpFlourControl.Communications
             {
                 while (dataReader.Read())
                 {
+                    //TODO 把remark讀進來
                     var pathID = dataReader.GetInt32(0);
                     var type = dataReader.GetInt32(1);
                     var refererNodeID = dataReader.GetInt32(2);
