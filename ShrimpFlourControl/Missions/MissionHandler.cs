@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ShrimpFlourControl.Stations;
+using ShrimpFlourControl.Vehicles;
 
 namespace ShrimpFlourControl.Missions
 {
@@ -11,6 +14,8 @@ namespace ShrimpFlourControl.Missions
     {
         public SFCServer SFC;
         public List<Mission> MissionList = new List<Mission>();
+        public List<Mission> MissionListExisted = new List<Mission>();
+        public DataGridView dataGridView;
         public MissionHandler(SFCServer SFC)
         {
             this.SFC = SFC;
@@ -56,27 +61,67 @@ namespace ShrimpFlourControl.Missions
         }
         public void RunMissionList(List<int> GoodSequence)
         {
-            var missionList = GetGoodSequenceMission(GoodSequence);
-            var stationlist = missionList.SelectMany(a => a.StationRouter).Distinct().ToList();
-            missionList.ForEach(mission =>
+            string finalMsg = "";
+            this.MissionListExisted = GetGoodSequenceMission(GoodSequence);
+            dataGridView.DataSource = MissionListExisted;
+            var stationlist = MissionListExisted.SelectMany(a => a.StationRouter).Distinct().ToList();
+            MissionListExisted.ForEach(mission =>
             {
                 var station = mission.StationRouter.First();
                 stationlist.Where(a => a.ID == station.ID).First().ReservedMissionList.Add(mission);
                 mission.StationRouterBak.Add(station); 
                 mission.StationRouter.Remove(station);
             });
-            missionList.ForEach(mission =>
+            new Thread(() =>
             {
-                var station = mission.StationRouterBak.First();
-                if (mission.Status == MissionStatus.Idle && station.Status == Station.StationStatus.Idle && station.ReservedMissionList.First().Id == mission.Id)
+                for (int i = 0; i < MissionListExisted.Count; i++)
                 {
-                    var sss = 1;
-                }
-                else
-                {
-                    var sss2 = 2;
-                }
-            });
+                    var mission = MissionListExisted[i];
+                    if (i == 1)
+                    {
+                        //break;
+                    }
+                    //
+                    AGVHandler aGVHandler = new AGVHandler(SFC);
+                    var station = mission.StationRouterBak.First();
+                    #region
+                    if (mission.Status == MissionStatus.Idle && station.Status == Station.StationStatus.Idle && station.ReservedMissionList.First().Id == mission.Id)
+                    {
+                        mission.Status = MissionStatus.Processing;
+                        //1.三個階段
+                        /*
+                         * good sequence 轉成任務列表
+                         * 任務列表會有mission id 跟
+                         */
+                        finalMsg += mission.Id + ":" + station.ID + Environment.NewLine;
+                        Console.WriteLine(finalMsg);
+                        mission.StationRouterBak.Remove(station);
+                        var agv = aGVHandler.FindFitnessAGV(station.ReferNode);
+                        Thread t = aGVHandler.SendAGVTo(station.ReferNode, agv);
+                        t.Start();
+                        while (t.IsAlive)
+                        {
+                        }
+                        System.Threading.Thread.Sleep(station.PrcoessingTime);
+                        mission.Status = MissionStatus.Done;
+                        var ssss = 1;
+                        if (station.ReservedMissionList.Count > 0)
+                        {
+                            station.ReservedMissionList.RemoveAt(0);
+                        }
+                    }
+                    else
+                    {
+                        var sss2 = 2;
+                    }
+                    #endregion
+
+                };
+            }).Start();
+        }
+        public void Do()
+        {
+
         }
     }
 }

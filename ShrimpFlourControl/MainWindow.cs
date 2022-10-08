@@ -20,7 +20,7 @@ namespace ShrimpFlourControl
     {
         private readonly MapDrawer _mapDrawer;
         public SFCServer SFC { get; }
-
+        public AGVHandler AGVHandler;
         private readonly Database _dataBase;
         private EditMode editMode;
         private Station.StationType stationType;
@@ -41,6 +41,7 @@ namespace ShrimpFlourControl
         public MainWindow()
         {
             InitializeComponent();
+            InitialListView();
             this.SFC = new SFCServer();
             _mapDrawer = new MapDrawer(this.SFC);
             mapRefreshTimer.Enabled = true;
@@ -240,8 +241,34 @@ namespace ShrimpFlourControl
         private void testRunToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MissionHandler missionHandler = new MissionHandler(this.SFC);
+            missionHandler.dataGridView = gvMissionList;
             List<int> goodSequence = new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
+            //var d = (SimulatedAGV)this.SFC.AGVs.FirstOrDefault();
+           
             missionHandler.RunMissionList(goodSequence);
+            //this.AGVHandler.SendAGVTo();
+        }
+        private void InitialListView()
+        {
+            //listView_missionList.View = View.Details;
+            //listView_missionList.GridLines = true;
+            //listView_missionList.LabelEdit = false;
+            //listView_missionList.FullRowSelect = true;
+            //listView_missionList.Columns.Add("Mission ID", 70);
+            //listView_missionList.Columns.Add("Operation", 60);
+            //listView_missionList.Columns.Add("Machine", 60);
+            //listView_missionList.Columns.Add("State", 60);
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    var item = new ListViewItem($"No.{i}");
+            //    item.SubItems.Add($"文字{i}");
+            //    listView_missionList.Items.Add(item);
+            //}
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

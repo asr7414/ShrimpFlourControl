@@ -41,11 +41,9 @@ namespace ShrimpFlourControl
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.connectionToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.connectToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.testRunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.open_file_from_dbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.save_to_dbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clear_dbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.selecttoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.delete_itemtoolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -55,32 +53,13 @@ namespace ShrimpFlourControl
             this.add_right_cornertoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.add_agvtoolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.五軸加工機ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.三軸加工機ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.原料倉ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.出貨倉ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.再製品倉ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.無人車充電站ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.add_workstationtoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.draw_gridtoolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.groupBox_AGVinfo = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label_AGVstate = new System.Windows.Forms.Label();
-            this.label_referNode = new System.Windows.Forms.Label();
-            this.label_AGVID = new System.Windows.Forms.Label();
-            this.groupBox_stationinfo = new System.Windows.Forms.GroupBox();
-            this.txtMsg = new System.Windows.Forms.TextBox();
-            this.gvMissionList = new System.Windows.Forms.DataGridView();
+            this.clear_dbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_mapViewer)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.groupBox_AGVinfo.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).BeginInit();
             this.SuspendLayout();
             // 
             // connectionToolStripMenuItem
@@ -131,9 +110,9 @@ namespace ShrimpFlourControl
             // 
             this.pictureBox_mapViewer.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.pictureBox_mapViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox_mapViewer.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_mapViewer.Location = new System.Drawing.Point(0, 24);
             this.pictureBox_mapViewer.Name = "pictureBox_mapViewer";
-            this.pictureBox_mapViewer.Size = new System.Drawing.Size(1349, 715);
+            this.pictureBox_mapViewer.Size = new System.Drawing.Size(1050, 548);
             this.pictureBox_mapViewer.TabIndex = 1;
             this.pictureBox_mapViewer.TabStop = false;
             this.pictureBox_mapViewer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_mapViewer_MouseDown);
@@ -145,15 +124,14 @@ namespace ShrimpFlourControl
             this.檔案ToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1349, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1050, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
             // connectionToolStripMenuItem3
             // 
             this.connectionToolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectToolStripMenuItem3,
-            this.testRunToolStripMenuItem});
+            this.connectToolStripMenuItem3});
             this.connectionToolStripMenuItem3.Name = "connectionToolStripMenuItem3";
             this.connectionToolStripMenuItem3.Size = new System.Drawing.Size(84, 20);
             this.connectionToolStripMenuItem3.Text = "Connection";
@@ -161,16 +139,9 @@ namespace ShrimpFlourControl
             // connectToolStripMenuItem3
             // 
             this.connectToolStripMenuItem3.Name = "connectToolStripMenuItem3";
-            this.connectToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.connectToolStripMenuItem3.Size = new System.Drawing.Size(121, 22);
             this.connectToolStripMenuItem3.Text = "Connect";
             this.connectToolStripMenuItem3.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
-            // 
-            // testRunToolStripMenuItem
-            // 
-            this.testRunToolStripMenuItem.Name = "testRunToolStripMenuItem";
-            this.testRunToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.testRunToolStripMenuItem.Text = "TestRun";
-            this.testRunToolStripMenuItem.Click += new System.EventHandler(this.testRunToolStripMenuItem_Click);
             // 
             // 檔案ToolStripMenuItem
             // 
@@ -185,23 +156,16 @@ namespace ShrimpFlourControl
             // open_file_from_dbToolStripMenuItem
             // 
             this.open_file_from_dbToolStripMenuItem.Name = "open_file_from_dbToolStripMenuItem";
-            this.open_file_from_dbToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.open_file_from_dbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.open_file_from_dbToolStripMenuItem.Text = "開啟舊檔";
             this.open_file_from_dbToolStripMenuItem.Click += new System.EventHandler(this.open_file_from_dbToolStripMenuItem_Click);
             // 
             // save_to_dbToolStripMenuItem
             // 
             this.save_to_dbToolStripMenuItem.Name = "save_to_dbToolStripMenuItem";
-            this.save_to_dbToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.save_to_dbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.save_to_dbToolStripMenuItem.Text = "另存新檔";
             this.save_to_dbToolStripMenuItem.Click += new System.EventHandler(this.save_to_dbToolStripMenuItem_Click);
-            // 
-            // clear_dbToolStripMenuItem
-            // 
-            this.clear_dbToolStripMenuItem.Name = "clear_dbToolStripMenuItem";
-            this.clear_dbToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.clear_dbToolStripMenuItem.Text = "刪除舊檔";
-            this.clear_dbToolStripMenuItem.Click += new System.EventHandler(this.clear_dbToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -217,12 +181,12 @@ namespace ShrimpFlourControl
             this.add_right_cornertoolStripButton,
             this.toolStripSeparator2,
             this.add_agvtoolStripButton,
-            this.toolStripSplitButton1,
+            this.add_workstationtoolStripButton,
             this.toolStripSeparator3,
             this.draw_gridtoolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1349, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(1050, 28);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -236,7 +200,6 @@ namespace ShrimpFlourControl
             this.selecttoolStripButton.Name = "selecttoolStripButton";
             this.selecttoolStripButton.Size = new System.Drawing.Size(24, 25);
             this.selecttoolStripButton.Text = "Select Mode";
-            this.selecttoolStripButton.Click += new System.EventHandler(this.selecttoolStripButton_Click);
             // 
             // delete_itemtoolStripButton
             // 
@@ -248,7 +211,6 @@ namespace ShrimpFlourControl
             this.delete_itemtoolStripButton.Name = "delete_itemtoolStripButton";
             this.delete_itemtoolStripButton.Size = new System.Drawing.Size(24, 25);
             this.delete_itemtoolStripButton.Text = "Delete Item";
-            this.delete_itemtoolStripButton.Click += new System.EventHandler(this.delete_itemtoolStripButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -264,7 +226,6 @@ namespace ShrimpFlourControl
             this.add_straight_pathtoolStripButton.Name = "add_straight_pathtoolStripButton";
             this.add_straight_pathtoolStripButton.Size = new System.Drawing.Size(24, 25);
             this.add_straight_pathtoolStripButton.Text = "Add Straight Path";
-            this.add_straight_pathtoolStripButton.Click += new System.EventHandler(this.add_straight_pathtoolStripButton_Click);
             // 
             // add_bend_pathtoolStripButton
             // 
@@ -275,7 +236,6 @@ namespace ShrimpFlourControl
             this.add_bend_pathtoolStripButton.Name = "add_bend_pathtoolStripButton";
             this.add_bend_pathtoolStripButton.Size = new System.Drawing.Size(24, 25);
             this.add_bend_pathtoolStripButton.Text = "Add Bend Path";
-            this.add_bend_pathtoolStripButton.Click += new System.EventHandler(this.add_bend_pathtoolStripButton_Click);
             // 
             // add_right_cornertoolStripButton
             // 
@@ -286,7 +246,6 @@ namespace ShrimpFlourControl
             this.add_right_cornertoolStripButton.Name = "add_right_cornertoolStripButton";
             this.add_right_cornertoolStripButton.Size = new System.Drawing.Size(24, 25);
             this.add_right_cornertoolStripButton.Text = "Add Right Corner Path";
-            this.add_right_cornertoolStripButton.Click += new System.EventHandler(this.add_right_cornertoolStripButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -302,65 +261,16 @@ namespace ShrimpFlourControl
             this.add_agvtoolStripButton.Name = "add_agvtoolStripButton";
             this.add_agvtoolStripButton.Size = new System.Drawing.Size(24, 25);
             this.add_agvtoolStripButton.Text = "Add AGV";
-            this.add_agvtoolStripButton.Click += new System.EventHandler(this.add_agvtoolStripButton_Click);
             // 
-            // toolStripSplitButton1
+            // add_workstationtoolStripButton
             // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.五軸加工機ToolStripMenuItem,
-            this.三軸加工機ToolStripMenuItem,
-            this.原料倉ToolStripMenuItem,
-            this.出貨倉ToolStripMenuItem,
-            this.再製品倉ToolStripMenuItem,
-            this.無人車充電站ToolStripMenuItem});
-            this.toolStripSplitButton1.Image = global::ShrimpFlourControl.Properties.Resources.workstation1;
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(36, 25);
-            this.toolStripSplitButton1.Text = "toolStripSplitButton1";
-            // 
-            // 五軸加工機ToolStripMenuItem
-            // 
-            this.五軸加工機ToolStripMenuItem.Name = "五軸加工機ToolStripMenuItem";
-            this.五軸加工機ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.五軸加工機ToolStripMenuItem.Text = "五軸加工機";
-            this.五軸加工機ToolStripMenuItem.Click += new System.EventHandler(this.五軸加工機ToolStripMenuItem_Click);
-            // 
-            // 三軸加工機ToolStripMenuItem
-            // 
-            this.三軸加工機ToolStripMenuItem.Name = "三軸加工機ToolStripMenuItem";
-            this.三軸加工機ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.三軸加工機ToolStripMenuItem.Text = "三軸加工機";
-            this.三軸加工機ToolStripMenuItem.Click += new System.EventHandler(this.三軸加工機ToolStripMenuItem_Click);
-            // 
-            // 原料倉ToolStripMenuItem
-            // 
-            this.原料倉ToolStripMenuItem.Name = "原料倉ToolStripMenuItem";
-            this.原料倉ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.原料倉ToolStripMenuItem.Text = "原料倉";
-            this.原料倉ToolStripMenuItem.Click += new System.EventHandler(this.原料倉ToolStripMenuItem_Click);
-            // 
-            // 出貨倉ToolStripMenuItem
-            // 
-            this.出貨倉ToolStripMenuItem.Name = "出貨倉ToolStripMenuItem";
-            this.出貨倉ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.出貨倉ToolStripMenuItem.Text = "成品倉";
-            this.出貨倉ToolStripMenuItem.Click += new System.EventHandler(this.出貨倉ToolStripMenuItem_Click);
-            // 
-            // 再製品倉ToolStripMenuItem
-            // 
-            this.再製品倉ToolStripMenuItem.Name = "再製品倉ToolStripMenuItem";
-            this.再製品倉ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.再製品倉ToolStripMenuItem.Text = "再製品倉";
-            this.再製品倉ToolStripMenuItem.Click += new System.EventHandler(this.再製品倉ToolStripMenuItem_Click);
-            // 
-            // 無人車充電站ToolStripMenuItem
-            // 
-            this.無人車充電站ToolStripMenuItem.Name = "無人車充電站ToolStripMenuItem";
-            this.無人車充電站ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.無人車充電站ToolStripMenuItem.Text = "無人車充電站";
-            this.無人車充電站ToolStripMenuItem.Click += new System.EventHandler(this.無人車充電站ToolStripMenuItem_Click);
+            this.add_workstationtoolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.add_workstationtoolStripButton.Image = global::ShrimpFlourControl.Properties.Resources.workstation1;
+            this.add_workstationtoolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.add_workstationtoolStripButton.Margin = new System.Windows.Forms.Padding(3, 1, 3, 2);
+            this.add_workstationtoolStripButton.Name = "add_workstationtoolStripButton";
+            this.add_workstationtoolStripButton.Size = new System.Drawing.Size(24, 25);
+            this.add_workstationtoolStripButton.Text = "Add Workstation";
             // 
             // toolStripSeparator3
             // 
@@ -376,137 +286,30 @@ namespace ShrimpFlourControl
             this.draw_gridtoolStripButton.Name = "draw_gridtoolStripButton";
             this.draw_gridtoolStripButton.Size = new System.Drawing.Size(24, 25);
             this.draw_gridtoolStripButton.Text = "Draw Grid";
-            this.draw_gridtoolStripButton.Click += new System.EventHandler(this.draw_gridtoolStripButton_Click);
             // 
-            // groupBox_AGVinfo
+            // clear_dbToolStripMenuItem
             // 
-            this.groupBox_AGVinfo.Controls.Add(this.txtMsg);
-            this.groupBox_AGVinfo.Controls.Add(this.groupBox1);
-            this.groupBox_AGVinfo.Controls.Add(this.textBox3);
-            this.groupBox_AGVinfo.Controls.Add(this.textBox2);
-            this.groupBox_AGVinfo.Controls.Add(this.textBox1);
-            this.groupBox_AGVinfo.Controls.Add(this.label_AGVstate);
-            this.groupBox_AGVinfo.Controls.Add(this.label_referNode);
-            this.groupBox_AGVinfo.Controls.Add(this.label_AGVID);
-            this.groupBox_AGVinfo.Controls.Add(this.groupBox_stationinfo);
-            this.groupBox_AGVinfo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox_AGVinfo.Location = new System.Drawing.Point(1076, 52);
-            this.groupBox_AGVinfo.Name = "groupBox_AGVinfo";
-            this.groupBox_AGVinfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox_AGVinfo.Size = new System.Drawing.Size(273, 663);
-            this.groupBox_AGVinfo.TabIndex = 3;
-            this.groupBox_AGVinfo.TabStop = false;
-            this.groupBox_AGVinfo.Text = "AGV information";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.gvMissionList);
-            this.groupBox1.Location = new System.Drawing.Point(0, 225);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(267, 365);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Mission List";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(62, 67);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 22);
-            this.textBox3.TabIndex = 9;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(62, 41);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 22);
-            this.textBox2.TabIndex = 8;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(62, 17);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 7;
-            // 
-            // label_AGVstate
-            // 
-            this.label_AGVstate.AutoSize = true;
-            this.label_AGVstate.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label_AGVstate.Location = new System.Drawing.Point(24, 77);
-            this.label_AGVstate.Name = "label_AGVstate";
-            this.label_AGVstate.Size = new System.Drawing.Size(27, 12);
-            this.label_AGVstate.TabIndex = 6;
-            this.label_AGVstate.Text = "State";
-            // 
-            // label_referNode
-            // 
-            this.label_referNode.AutoSize = true;
-            this.label_referNode.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label_referNode.Location = new System.Drawing.Point(24, 51);
-            this.label_referNode.Name = "label_referNode";
-            this.label_referNode.Size = new System.Drawing.Size(30, 12);
-            this.label_referNode.TabIndex = 5;
-            this.label_referNode.Text = "Node";
-            // 
-            // label_AGVID
-            // 
-            this.label_AGVID.AutoSize = true;
-            this.label_AGVID.Location = new System.Drawing.Point(24, 27);
-            this.label_AGVID.Name = "label_AGVID";
-            this.label_AGVID.Size = new System.Drawing.Size(17, 12);
-            this.label_AGVID.TabIndex = 4;
-            this.label_AGVID.Text = "ID";
-            // 
-            // groupBox_stationinfo
-            // 
-            this.groupBox_stationinfo.Location = new System.Drawing.Point(0, 107);
-            this.groupBox_stationinfo.Name = "groupBox_stationinfo";
-            this.groupBox_stationinfo.Size = new System.Drawing.Size(267, 112);
-            this.groupBox_stationinfo.TabIndex = 4;
-            this.groupBox_stationinfo.TabStop = false;
-            this.groupBox_stationinfo.Text = "Station information";
-            // 
-            // txtMsg
-            // 
-            this.txtMsg.Location = new System.Drawing.Point(6, 596);
-            this.txtMsg.Multiline = true;
-            this.txtMsg.Name = "txtMsg";
-            this.txtMsg.Size = new System.Drawing.Size(255, 55);
-            this.txtMsg.TabIndex = 10;
-            // 
-            // gvMissionList
-            // 
-            this.gvMissionList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvMissionList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gvMissionList.Location = new System.Drawing.Point(3, 18);
-            this.gvMissionList.Name = "gvMissionList";
-            this.gvMissionList.RowTemplate.Height = 24;
-            this.gvMissionList.Size = new System.Drawing.Size(261, 344);
-            this.gvMissionList.TabIndex = 0;
+            this.clear_dbToolStripMenuItem.Name = "clear_dbToolStripMenuItem";
+            this.clear_dbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clear_dbToolStripMenuItem.Text = "刪除舊檔";
+            this.clear_dbToolStripMenuItem.Click += new System.EventHandler(this.clear_dbToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1349, 715);
-            this.Controls.Add(this.groupBox_AGVinfo);
+            this.ClientSize = new System.Drawing.Size(1050, 572);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.pictureBox_mapViewer);
+            this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainWindow";
             this.Text = "SFC";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_mapViewer)).EndInit();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.groupBox_AGVinfo.ResumeLayout(false);
-            this.groupBox_AGVinfo.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -536,28 +339,10 @@ namespace ShrimpFlourControl
         private System.Windows.Forms.ToolStripButton add_right_cornertoolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton add_agvtoolStripButton;
+        private System.Windows.Forms.ToolStripButton add_workstationtoolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton draw_gridtoolStripButton;
         private System.Windows.Forms.ToolStripMenuItem clear_dbToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
-        private System.Windows.Forms.ToolStripMenuItem 五軸加工機ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 三軸加工機ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 原料倉ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 出貨倉ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 再製品倉ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 無人車充電站ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem testRunToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox_AGVinfo;
-        private System.Windows.Forms.Label label_AGVID;
-        private System.Windows.Forms.GroupBox groupBox_stationinfo;
-        private System.Windows.Forms.Label label_AGVstate;
-        private System.Windows.Forms.Label label_referNode;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtMsg;
-        private System.Windows.Forms.DataGridView gvMissionList;
     }
 }
 

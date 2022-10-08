@@ -101,9 +101,6 @@
     </Compile>
     <Compile Include="Maps\Node.cs" />
     <Compile Include="Maps\Path.cs" />
-    <Compile Include="Missions\Mission.cs" />
-    <Compile Include="Missions\MissionHandler.cs" />
-    <Compile Include="Missions\WorkOrder.cs" />
     <Compile Include="PathPlanner\AStarPlanner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

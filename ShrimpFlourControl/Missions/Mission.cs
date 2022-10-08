@@ -10,22 +10,24 @@ namespace ShrimpFlourControl.Missions
     #region Enums
     public enum MissionStatus : int
     {
-        Idle = 0,
+        Idle = 0, // (waiting)
         Loading = 1,
-        Processing = 2,
+        Processing = 2,                                                                                                                             
         Unloading = 3,
-        Done = 4,
+        ProcessingDone = 4,
+        Done = 10,
     }
     #endregion
     public class Mission
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+       
         public MissionStatus Status { get; set; } = MissionStatus.Idle;
         public Station CurrentStation { get; set; }
         public Station NextStation { get; set; }
         public List<Station> StationRouter { get; set; }
         public List<Station> StationRouterBak { get; set; } = new List<Station>();
+        public List<Station> StationRouterDone { get; set; } = new List<Station>();
         public List<int> StationProcessTime { get; set; }
     }
 }
