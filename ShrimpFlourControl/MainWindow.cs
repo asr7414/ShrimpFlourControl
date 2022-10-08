@@ -13,6 +13,7 @@ using ShrimpFlourControl.Communications;
 using ShrimpFlourControl.Vehicles;
 using ShrimpFlourControl.Stations;
 using ShrimpFlourControl.Missions;
+using ShrimpFlourControl.Orders;
 
 namespace ShrimpFlourControl
 {
@@ -268,7 +269,16 @@ namespace ShrimpFlourControl
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            
+        }
 
+        private void btnAddOrder_Click(object sender, EventArgs e)
+        {
+            frmAddOrder frm = new frmAddOrder();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                SFC.Orders.Add(frm.order);
+            }
         }
     }
 }

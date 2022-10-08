@@ -9,6 +9,7 @@ using ShrimpFlourControl.Stations;
 using ShrimpFlourControl.Vehicles;
 using ShrimpFlourControl.PathPlanner;
 using ShrimpFlourControl.Missions;
+using ShrimpFlourControl.Orders;
 
 namespace ShrimpFlourControl
 {
@@ -23,6 +24,7 @@ namespace ShrimpFlourControl
         public List<AGV> AGVs { get; private set; }
         public List<Station> Stations { get; private set; }
         public List<Mission> Missions { get; set; }
+        public List<Order> Orders { get; set; } = new List<Order>();
         public Node SelectedNode { get; set; }
         public Node SelectedPathNode1 { get; set; }
         public Node SelectedPathNode2 { get; set; }
