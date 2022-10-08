@@ -8,7 +8,9 @@ namespace ShrimpFlourControl.Orders
 {
     public class Order
     {
+        public int OrderId { get; set; }
         public int ProductId { get; set; }
+        public Products.Product Product { get; set; }
         public int Quantity { get; set; }   
         public int Priority { get; set; }
         public DateTime DueDate { get; set; }

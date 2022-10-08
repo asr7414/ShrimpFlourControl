@@ -84,7 +84,7 @@ namespace ShrimpFlourControl.Communications
                     {
                         Mission mission = new Mission()
                         {
-                            Id = ProductId,
+                            MissionId = ProductId,
                         };
                         //mission.StationRouter.Add()
 
@@ -311,7 +311,7 @@ namespace ShrimpFlourControl.Communications
             {
                 foreach (var agv in agvList)
                 {
-                    string queryString = $"INSERT INTO `AGV`(`ID`, `NodeID`) VALUES('{agv.ID}','{agv.CurrentNode.ID}')";
+                    string queryString = $"INSERT INTO `AGV`(`ID`, `NodeID`) VALUES('{agv.AgvId}','{agv.CurrentNode.ID}')";
                     sqlCmd = new MySqlCommand(queryString, _mySqlConnection);
                     sqlCmd.ExecuteNonQuery();
                 }
@@ -355,7 +355,7 @@ namespace ShrimpFlourControl.Communications
                 foreach (var station in stationList)
                 {
                     string queryString = $"INSERT INTO `Station`(`ID`, `Type`, `RefererNodeID`, `OffsetX`, `OffsetY`) " +
-                        $"VALUES ('{station.ID}','{(int)station.Type}','{station.ReferNode.ID}','{station.OffsetX}','{station.OffsetY}')";
+                        $"VALUES ('{station.StationId}','{(int)station.Type}','{station.ReferNode.ID}','{station.OffsetX}','{station.OffsetY}')";
                     sqlCmd = new MySqlCommand(queryString, _mySqlConnection);
                     sqlCmd.ExecuteNonQuery();
                 }

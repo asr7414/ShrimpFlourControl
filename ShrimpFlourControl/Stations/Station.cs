@@ -32,7 +32,7 @@ namespace ShrimpFlourControl.Stations
         }
         #endregion
 
-        public int ID { get; }
+        public int StationId { get; }
         public Node ReferNode { get; }
         public int OffsetX { get; set; }
         public int OffsetY { get; set; }
@@ -41,7 +41,7 @@ namespace ShrimpFlourControl.Stations
         public int PrcoessingTime { get; set; }
         protected Station(int id, Node refererNode, int offsetX, int offsetY, StationType type)
         {
-            this.ID = id;
+            this.StationId = id;
             this.ReferNode = refererNode;
             this.OffsetX = offsetX;
             this.OffsetY = offsetY;

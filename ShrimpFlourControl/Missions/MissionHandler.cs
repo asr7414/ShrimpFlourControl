@@ -25,32 +25,32 @@ namespace ShrimpFlourControl.Missions
             MissionList = new List<Mission>
             {
                 new Mission{
-                    Id=1,
+                    MissionId=1,
                     StationRouter=new List<Station>{
-                        this.SFC.Stations.Where(s => s.ID == 1).First(),
-                        this.SFC.Stations.Where(s => s.ID == 6).First(),
-                        this.SFC.Stations.Where(s => s.ID == 0).First(),}
+                        this.SFC.Stations.Where(s => s.StationId == 1).First(),
+                        this.SFC.Stations.Where(s => s.StationId == 6).First(),
+                        this.SFC.Stations.Where(s => s.StationId == 0).First(),}
                     ,StationProcessTime=new List<int>(),
                 },
                 new Mission{
-                    Id=2,
+                    MissionId=2,
                     StationRouter=new List<Station>{
-                        this.SFC.Stations.Where(s => s.ID == 0).First(),
-                        this.SFC.Stations.Where(s => s.ID == 6).First(),
-                        this.SFC.Stations.Where(s => s.ID == 1).First(),}
+                        this.SFC.Stations.Where(s => s.StationId == 0).First(),
+                        this.SFC.Stations.Where(s => s.StationId == 6).First(),
+                        this.SFC.Stations.Where(s => s.StationId == 1).First(),}
                 },
                 new Mission{
-                   Id=3,
+                   MissionId=3,
                     StationRouter=new List<Station>{
-                        this.SFC.Stations.Where(s => s.ID == 6).First(),
-                        this.SFC.Stations.Where(s => s.ID == 1).First(),
-                        this.SFC.Stations.Where(s => s.ID == 0).First(),}
+                        this.SFC.Stations.Where(s => s.StationId == 6).First(),
+                        this.SFC.Stations.Where(s => s.StationId == 1).First(),
+                        this.SFC.Stations.Where(s => s.StationId == 0).First(),}
                 }
             };
         }
         public Mission GetMissionById(int id)
         {
-            return MissionList.Where(a => a.Id == id).FirstOrDefault();
+            return MissionList.Where(a => a.MissionId == id).FirstOrDefault();
         }
         
         public List<Mission> GetGoodSequenceMission(List<int> GoodSequence)
@@ -58,6 +58,11 @@ namespace ShrimpFlourControl.Missions
             return GoodSequence.Select(a => GetMissionById(a)).ToList();
             //List<int> goodSequence = new List<int>() { 2,1,3,1,1,2,3,2,3};
             //OOXX(goodSequence);
+        }
+        public List<Mission> GetMissionList()
+        {
+            var sss = SFC.Orders.Select(a => a.Product);
+            throw new NotImplementedException();
         }
         public void RunMissionList(List<int> GoodSequence)
         {
@@ -68,7 +73,7 @@ namespace ShrimpFlourControl.Missions
             MissionListExisted.ForEach(mission =>
             {
                 var station = mission.StationRouter.First();
-                stationlist.Where(a => a.ID == station.ID).First().ReservedMissionList.Add(mission);
+                stationlist.Where(a => a.StationId == station.StationId).First().ReservedMissionList.Add(mission);
                 mission.StationRouterBak.Add(station); 
                 mission.StationRouter.Remove(station);
             });
@@ -85,7 +90,7 @@ namespace ShrimpFlourControl.Missions
                     AGVHandler aGVHandler = new AGVHandler(SFC);
                     var station = mission.StationRouterBak.First();
                     #region
-                    if (mission.Status == MissionStatus.Waiting && station.Status == Station.StationStatus.Idle && station.ReservedMissionList.First().Id == mission.Id)
+                    if (mission.Status == MissionStatus.Waiting && station.Status == Station.StationStatus.Idle && station.ReservedMissionList.First().MissionId == mission.MissionId)
                     {
                         mission.Status = MissionStatus.Processing;
                         //1.三個階段
@@ -93,7 +98,7 @@ namespace ShrimpFlourControl.Missions
                          * good sequence 轉成任務列表
                          * 任務列表會有mission id 跟
                          */
-                        finalMsg += mission.Id + ":" + station.ID + Environment.NewLine;
+                        finalMsg += mission.MissionId + ":" + station.StationId + Environment.NewLine;
                         Console.WriteLine(finalMsg);
                         mission.StationRouterBak.Remove(station);
                         var agv = aGVHandler.FindFitnessAGV(station.ReferNode);

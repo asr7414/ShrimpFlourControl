@@ -15,7 +15,7 @@ namespace ShrimpFlourControl.Vehicles
         private const float _speedFactor = 5.0f;
         public SimulatedAGV(int id, Node currentNode)
         {
-            this.ID = id;
+            this.AgvId = id;
             this.CurrentNode = currentNode;
             this.X = currentNode.PosX;
             this.Y = currentNode.PosY;

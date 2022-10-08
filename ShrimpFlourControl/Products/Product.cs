@@ -14,7 +14,7 @@ namespace ShrimpFlourControl.Products
         /// <summary>
         /// 產品ID
         /// </summary>
-        public int Id { get; set; }
+        public int ProductId { get; set; }
         /// <summary>
         /// 產品名
         /// </summary>

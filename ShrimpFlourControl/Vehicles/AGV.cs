@@ -24,7 +24,7 @@ namespace ShrimpFlourControl.Vehicles
         }
         #endregion
 
-        public int ID { get; private protected set; }
+        public int AgvId { get; private protected set; }
         public float X { get; set; } // private protected (為啥)
         public float Y { get; set; } // private protected (為啥)
 
@@ -39,7 +39,7 @@ namespace ShrimpFlourControl.Vehicles
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return this.ID == other.ID && this.CurrentNode == other.CurrentNode;
+            return this.AgvId == other.AgvId && this.CurrentNode == other.CurrentNode;
         }
 
         public override bool Equals(object obj)
@@ -62,12 +62,12 @@ namespace ShrimpFlourControl.Vehicles
 
         public override int GetHashCode()
         {
-            return (this.ID.GetHashCode());
+            return (this.AgvId.GetHashCode());
         }
 
         public override string ToString()
         {
-            return $"AGV_{this.ID.ToString("000")}";
+            return $"AGV_{this.AgvId.ToString("000")}";
         }
     }
 }

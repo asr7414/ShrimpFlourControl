@@ -22,7 +22,7 @@ namespace ShrimpFlourControl.Missions
         /// <summary>
         /// MissionId
         /// </summary>
-        public int Id { get; set; }
+        public int MissionId { get; set; }
         /// <summary>
         /// 訂單ID
         /// </summary>
@@ -35,6 +35,7 @@ namespace ShrimpFlourControl.Missions
         /// 機台編號
         /// </summary>
         public int StationId { get; set; }
+        public Orders.Order Order { get; set; } 
        
         public MissionStatus Status { get; set; } = MissionStatus.Waiting;
         public Station CurrentStation { get; set; }
