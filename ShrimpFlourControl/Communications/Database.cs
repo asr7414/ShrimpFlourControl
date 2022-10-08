@@ -18,11 +18,11 @@ namespace ShrimpFlourControl.Communications
     public class Database
     {
 
-        private const string dbHost = "140.112.16.7";       // Database Hostname or IP
-        private const string dbPort = "13306";                // Database Port (default is 3306)
+        private const string dbHost = "db.asrlab.ml";       // Database Hostname or IP
+        private const string dbPort = "3306";                // Database Port (default is 3306)
         private const string dbUser = "mes";                 // Database Username
-        private const string dbPass = "0979579729";             // Database Password
-        private const string dbName = "db_MES_2";                   // Database Name
+        private const string dbPass = "mes_jenhan";             // Database Password
+        private const string dbName = "db_MES";                   // Database Name
         private string connStr = "server=" + dbHost + ";port=" + dbPort + ";uid=" + dbUser + ";pwd=" + dbPass + ";database=" + dbName;
         private const string sqlStringPath = "SELECT * FROM `Path` WHERE 1";
         private const string sqlStringAGV = "SELECT * FROM `AGV` WHERE 1";
@@ -67,7 +67,7 @@ namespace ShrimpFlourControl.Communications
 
         public List<Mission> GetAllMissions()
         {
-            const string sqlString = "SELECT * FROM `ProductionStation` WHERE 1";
+            const string sqlString = "SELECT * FROM `ProductionOperaction` WHERE 1";
             MySqlCommand sqlCmd = new MySqlCommand(sqlString, _mySqlConnection);
             MySqlDataReader dataReader = sqlCmd.ExecuteReader();
             List<Mission> list = new List<Mission>();
@@ -275,8 +275,10 @@ namespace ShrimpFlourControl.Communications
 
             return stationList;
         }
+        //
         public List<Product> GetAllProducts()
         {
+            //TODO : 請學生做, 須包含ProductOpertionList
             return null;
         }
 
