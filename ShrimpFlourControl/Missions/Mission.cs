@@ -10,19 +10,33 @@ namespace ShrimpFlourControl.Missions
     #region Enums
     public enum MissionStatus : int
     {
-        Idle = 0, // (waiting)
-        Loading = 1,
-        Processing = 2,                                                                                                                             
-        Unloading = 3,
-        ProcessingDone = 4,
-        Done = 10,
+        Waiting = 0, // (waiting)
+        Processing = 1,                                                                                                                             
+        Unloading = 2,
+        ProcessingDone = 3,
+        Finished = 4,
     }
     #endregion
     public class Mission
     {
+        /// <summary>
+        /// MissionId
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// 訂單ID
+        /// </summary>
+        public int OrderId { get; set; }
+        /// <summary>
+        /// 該ORDER目前是第幾個工序
+        /// </summary>
+        public int ProdcutOperactionSequence { get; set; }
+        /// <summary>
+        /// 機台編號
+        /// </summary>
+        public int StationId { get; set; }
        
-        public MissionStatus Status { get; set; } = MissionStatus.Idle;
+        public MissionStatus Status { get; set; } = MissionStatus.Waiting;
         public Station CurrentStation { get; set; }
         public Station NextStation { get; set; }
         public List<Station> StationRouter { get; set; }

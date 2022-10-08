@@ -11,6 +11,7 @@ using ShrimpFlourControl.Vehicles;
 using ShrimpFlourControl.Stations;
 using ShrimpFlourControl.Missions;
 using System.Data;
+using ShrimpFlourControl.Products;
 
 namespace ShrimpFlourControl.Communications
 {
@@ -273,6 +274,10 @@ namespace ShrimpFlourControl.Communications
             }
 
             return stationList;
+        }
+        public List<Product> GetAllProducts()
+        {
+            return null;
         }
 
         public bool SaveAllNodes(List<Node> nodeList)

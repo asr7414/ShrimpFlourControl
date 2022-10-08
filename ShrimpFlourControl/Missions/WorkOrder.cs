@@ -16,7 +16,7 @@ namespace ShrimpFlourControl.Missions
         public string OperactionMachine { get; set; }
         
 
-        public MissionStatus OperactionStatus { get; set; } = MissionStatus.Idle;
+        public MissionStatus OperactionStatus { get; set; } = MissionStatus.Waiting;
 
     }
 }

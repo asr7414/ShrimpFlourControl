@@ -85,7 +85,7 @@ namespace ShrimpFlourControl.Missions
                     AGVHandler aGVHandler = new AGVHandler(SFC);
                     var station = mission.StationRouterBak.First();
                     #region
-                    if (mission.Status == MissionStatus.Idle && station.Status == Station.StationStatus.Idle && station.ReservedMissionList.First().Id == mission.Id)
+                    if (mission.Status == MissionStatus.Waiting && station.Status == Station.StationStatus.Idle && station.ReservedMissionList.First().Id == mission.Id)
                     {
                         mission.Status = MissionStatus.Processing;
                         //1.三個階段
@@ -103,7 +103,7 @@ namespace ShrimpFlourControl.Missions
                         {
                         }
                         System.Threading.Thread.Sleep(station.PrcoessingTime);
-                        mission.Status = MissionStatus.Done;
+                        mission.Status = MissionStatus.Finished;
                         var ssss = 1;
                         if (station.ReservedMissionList.Count > 0)
                         {

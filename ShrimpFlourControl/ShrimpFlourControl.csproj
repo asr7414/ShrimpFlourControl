@@ -104,7 +104,10 @@
     <Compile Include="Missions\Mission.cs" />
     <Compile Include="Missions\MissionHandler.cs" />
     <Compile Include="Missions\WorkOrder.cs" />
+    <Compile Include="Orders\Order.cs" />
     <Compile Include="PathPlanner\AStarPlanner.cs" />
+    <Compile Include="Products\Product.cs" />
+    <Compile Include="Products\ProductOperaction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SFCServer.cs" />

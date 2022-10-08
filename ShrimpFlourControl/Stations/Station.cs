@@ -27,7 +27,8 @@ namespace ShrimpFlourControl.Stations
             Idle = 0,
             Loading = 1,
             Processing = 2,
-            Unloading = 3
+            Unloading = 3,
+            ProcessingDone = 4
         }
         #endregion
 
