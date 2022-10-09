@@ -9,7 +9,7 @@ namespace ShrimpFlourControl.Stations
 {
     public class StorageStation : Station
     {
-        public StorageStation(int id, Node refererNode, int offsetX, int offsetY) : base(id, refererNode, offsetX, offsetY, StationType.StorageStation)
+        public StorageStation(int id, Node refererNode, int offsetX, int offsetY, char remark) : base(id, refererNode, offsetX, offsetY, StationType.StorageStation, remark)
         {
 
         }

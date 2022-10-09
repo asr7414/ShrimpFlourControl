@@ -9,7 +9,7 @@ namespace ShrimpFlourControl.Stations
 {
     public class FiveAxisCNC : Station
     {
-        public FiveAxisCNC(int id, Node refererNode, int offsetX, int offsetY) : base(id, refererNode, offsetX, offsetY, StationType.FiveAxisCNC)
+        public FiveAxisCNC(int id, Node refererNode, int offsetX, int offsetY, char remark) : base(id, refererNode, offsetX, offsetY, StationType.FiveAxisCNC, remark)
         {
 
         }

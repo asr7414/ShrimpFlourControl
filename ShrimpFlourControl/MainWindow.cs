@@ -46,7 +46,7 @@ namespace ShrimpFlourControl
             this.SFC = new SFCServer();
             _mapDrawer = new MapDrawer(this.SFC);
             mapRefreshTimer.Enabled = true;
-            var fiveAxis = new FiveAxisCNC(123, new Maps.Node(12, 1, 1), 10, 10);
+            //var fiveAxis = new FiveAxisCNC(123, new Maps.Node(12, 1, 1), 10, 10);
         }
 
 

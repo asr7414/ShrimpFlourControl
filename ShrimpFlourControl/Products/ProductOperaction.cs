@@ -19,6 +19,12 @@ namespace ShrimpFlourControl.Products
         /// <summary>
         /// 工序作業時間
         /// </summary>
-        public int OperactionTime { get;set; }
+        public int OperactionTime { get; set; }
+        public ProductOperaction(int productID, int stationId, int operactionTime)
+        {
+            ProductID = productID;
+            StationId = stationId;
+            OperactionTime = operactionTime;
+        }
     }
 }

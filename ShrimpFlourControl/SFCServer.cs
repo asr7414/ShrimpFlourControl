@@ -10,6 +10,7 @@ using ShrimpFlourControl.Vehicles;
 using ShrimpFlourControl.PathPlanner;
 using ShrimpFlourControl.Missions;
 using ShrimpFlourControl.Orders;
+using ShrimpFlourControl.Products;
 
 namespace ShrimpFlourControl
 {
@@ -25,6 +26,8 @@ namespace ShrimpFlourControl
         public List<Station> Stations { get; private set; }
         public List<Mission> Missions { get; set; }
         public List<Order> Orders { get; set; } = new List<Order>();
+        public List<Product> Products { get; set; }
+        public List<ProductOperaction> ProductOperactions { get; set; }
         public Node SelectedNode { get; set; }
         public Node SelectedPathNode1 { get; set; }
         public Node SelectedPathNode2 { get; set; }
@@ -41,6 +44,8 @@ namespace ShrimpFlourControl
             this.Paths = new List<Path>();
             this.AGVs = new List<AGV>();
             this.Stations = new List<Station>();
+            this.Products = new List<Product>();
+            this.ProductOperactions = new List<ProductOperaction>();
         }
 
         public bool ConnectToDatabase()
@@ -55,6 +60,8 @@ namespace ShrimpFlourControl
                 Paths = _dataBase.GetAllPaths(Nodes);
                 Stations = _dataBase.GetAllStations(Nodes);
                 Missions = _dataBase.GetAllMissions();
+                Products = _dataBase.GetAllProducts();
+                ProductOperactions = _dataBase.GetAllProductOperactions();
             }
 
             return result;

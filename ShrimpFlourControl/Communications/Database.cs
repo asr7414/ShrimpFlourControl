@@ -226,12 +226,13 @@ namespace ShrimpFlourControl.Communications
             {
                 while (dataReader.Read())
                 {
-                    //TODO 把remark讀進來
+                    //TODO 把remark讀進來 OK
                     var pathID = dataReader.GetInt32(0);
                     var type = dataReader.GetInt32(1);
                     var refererNodeID = dataReader.GetInt32(2);
                     var offsetX = dataReader.GetInt32(3);
                     var offsetY = dataReader.GetInt32(4);
+                    var remark = dataReader.GetChar(5);
                     var refererNode = refererNodes.FirstOrDefault(node => node.ID == refererNodeID);
                     if (refererNode != null)
                     {
@@ -239,22 +240,22 @@ namespace ShrimpFlourControl.Communications
                         switch ((Station.StationType)type)
                         {
                             case Station.StationType.FiveAxisCNC:                                
-                                newStation = new FiveAxisCNC(pathID, refererNode, offsetX, offsetY);
+                                newStation = new FiveAxisCNC(pathID, refererNode, offsetX, offsetY, remark);
                                 break;
                             case Station.StationType.ChargeStation:
-                                newStation = new ChargeStation(pathID, refererNode, offsetX, offsetY);
+                                newStation = new ChargeStation(pathID, refererNode, offsetX, offsetY, remark);
                                 break;
                             case Station.StationType.Rack:
-                                newStation = new Rack(pathID, refererNode, offsetX, offsetY);
+                                newStation = new Rack(pathID, refererNode, offsetX, offsetY, remark);
                                 break;
                             case Station.StationType.StorageStation:
-                                newStation = new StorageStation(pathID, refererNode, offsetX, offsetY);
+                                newStation = new StorageStation(pathID, refererNode, offsetX, offsetY, remark);
                                 break;
                             case Station.StationType.ThreeAxisCNC:
-                                newStation = new ThreeAxisCNC(pathID, refererNode, offsetX, offsetY);
+                                newStation = new ThreeAxisCNC(pathID, refererNode, offsetX, offsetY, remark);
                                 break;
                             case Station.StationType.WIP:
-                                newStation = new WIP(pathID, refererNode, offsetX, offsetY);
+                                newStation = new WIP(pathID, refererNode, offsetX, offsetY, remark);
                                 break;
                         }
                         if (newStation != null)
@@ -280,9 +281,54 @@ namespace ShrimpFlourControl.Communications
         public List<Product> GetAllProducts()
         {
             //TODO : 請學生做, 須包含ProductOpertionList
-            return null;
+            const string sqlString = "SELECT * FROM `Product` WHERE 1";
+            MySqlCommand sqlCmd = new MySqlCommand(sqlString, _mySqlConnection);
+            MySqlDataReader dataReader = sqlCmd.ExecuteReader();
+            List<Product> productList = new List<Product>();
+            try
+            {
+                while (dataReader.Read())
+                {
+                    var productID = dataReader.GetInt32(0);
+                    var productName = dataReader.GetString(1);
+                    var newproduct = new Product(productID, productName);
+                    productList.Add(newproduct);
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return null;
+            }
+            finally { dataReader.Close(); }
+            return productList;
         }
 
+        public List<ProductOperaction> GetAllProductOperactions()
+        {
+            const string sqlString = "SELECT * FROM `ProductionOperaction` WHERE 1";
+            MySqlCommand sqlCmd = new MySqlCommand(sqlString, _mySqlConnection);
+            MySqlDataReader dataReader = sqlCmd.ExecuteReader();
+            List<ProductOperaction> producoperactiontList = new List<ProductOperaction>();
+            try
+            {
+                while (dataReader.Read())
+                { 
+                    var productID = dataReader.GetInt32(0);
+                    var stationID = dataReader.GetInt32(1);
+                    var operactionTime = dataReader.GetInt32(2);
+                    var ID = dataReader.GetInt32(3);
+                    var newproductOperaction = new ProductOperaction(productID, stationID, operactionTime);
+                    producoperactiontList.Add(newproductOperaction);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally { dataReader.Close(); }
+            return producoperactiontList;
+        }
         public bool SaveAllNodes(List<Node> nodeList)
         {
             MySqlCommand sqlCmd;

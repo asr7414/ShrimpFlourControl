@@ -23,5 +23,11 @@ namespace ShrimpFlourControl.Products
         /// 產品工序順序
         /// </summary>
         public List<ProductOperaction> ProductOperactionList { get; set; }
+        public Product(int id, string name)
+        {
+            ProductId = id;
+            Name = name;
+            //ProductOperactionList = productOperactions;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace ShrimpFlourControl.Stations
 {
     public class WIP : Station
     {
-        public WIP(int id, Node refererNode, int offsetX, int offsetY) : base(id, refererNode, offsetX, offsetY, StationType.WIP)
+        public WIP(int id, Node refererNode, int offsetX, int offsetY, char remark) : base(id, refererNode, offsetX, offsetY, StationType.WIP, remark)
         {
 
         }

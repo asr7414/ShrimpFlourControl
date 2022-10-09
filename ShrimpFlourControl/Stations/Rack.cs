@@ -10,7 +10,7 @@ namespace ShrimpFlourControl.Stations
     public class Rack: Station
     {
 
-        public Rack(int id, Node refererNode, int offsetX, int offsetY) : base(id, refererNode, offsetX, offsetY, StationType.Rack)
+        public Rack(int id, Node refererNode, int offsetX, int offsetY, char remark) : base(id, refererNode, offsetX, offsetY, StationType.Rack, remark)
         {
 
         }
