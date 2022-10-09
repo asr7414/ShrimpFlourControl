@@ -36,6 +36,7 @@ namespace ShrimpFlourControl
         public AGV SelectedAGV { get; set; }
 
 
+
         public SFCServer()
         {
             _dataBase = new Database();

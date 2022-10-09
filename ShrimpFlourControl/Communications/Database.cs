@@ -280,7 +280,7 @@ namespace ShrimpFlourControl.Communications
         //
         public List<Product> GetAllProducts()
         {
-            //TODO : 請學生做, 須包含ProductOpertionList
+            //TODO : 請學生做, 須包含ProductOpertionList OK
             const string sqlString = "SELECT * FROM `Product` WHERE 1";
             MySqlCommand sqlCmd = new MySqlCommand(sqlString, _mySqlConnection);
             MySqlDataReader dataReader = sqlCmd.ExecuteReader();

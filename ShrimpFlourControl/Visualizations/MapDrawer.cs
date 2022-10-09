@@ -22,6 +22,9 @@ namespace ShrimpFlourControl.Visualizations
         private const int _nodeSize = 32;
         private const int _agvSize = 32;
         private const int _initialgridsize = 20;
+        private const int _initialgridscale = 1;
+        private bool _gridState = false;
+        
         public MapDrawer(SFCServer sfc)
         {
             _sfc = sfc;
@@ -40,9 +43,10 @@ namespace ShrimpFlourControl.Visualizations
             DrawNodes();
             DrawStations();
             DrawAGVs();
-
+            //DrawGridMap();
             return _picture;
         }
+
 
         public Node GetNode(Point mouseLocation)
         {
@@ -91,7 +95,30 @@ namespace ShrimpFlourControl.Visualizations
             }
             return null;
         }
+        public void DrawGridMap()
+        {
+            _gridState = true;
 
+            //var bitMap = new Bitmap(Grid_picturebox.Width, Grid_picturebox.Height);
+            var bitMap = new Bitmap(_picture.Width, _picture.Height);
+            using (var g = Graphics.FromImage(_picture))
+            {
+                float startx, starty, endx, endy;
+                startx = 0;
+                starty = 0;
+                endx = bitMap.Width;
+                endy = bitMap.Height;
+
+                for (int i = 1; i < _picture.Width; i++)
+                {
+                    g.DrawLine(new Pen(Color.FromArgb(128, 220, 220, 220), 1), (startx + _initialgridsize) * i * _initialgridscale, starty * i * _initialgridscale, (startx + _initialgridsize) * i * _initialgridscale, endy * i * _initialgridscale);
+                    for (int j = 1; j < _picture.Height; j++)
+                    {
+                        g.DrawLine(new Pen(Color.FromArgb(128, 220, 220, 220), 1), startx * j * _initialgridscale, (starty + _initialgridsize) * j * _initialgridscale, endx * j * _initialgridscale, (starty + _initialgridsize) * j * _initialgridscale);
+                    }
+                }
+            }
+        }
         private void DrawNodes()
         {
             using (var graphics = Graphics.FromImage(_picture))

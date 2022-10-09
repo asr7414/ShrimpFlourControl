@@ -48,7 +48,7 @@
             // cbProductId
             // 
             this.cbProductId.FormattingEnabled = true;
-            this.cbProductId.Location = new System.Drawing.Point(132, 47);
+            this.cbProductId.Location = new System.Drawing.Point(147, 47);
             this.cbProductId.Name = "cbProductId";
             this.cbProductId.Size = new System.Drawing.Size(121, 23);
             this.cbProductId.TabIndex = 1;
@@ -65,7 +65,7 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(132, 90);
+            this.comboBox2.Location = new System.Drawing.Point(147, 90);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 23);
             this.comboBox2.TabIndex = 3;
