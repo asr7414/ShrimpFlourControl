@@ -68,6 +68,7 @@ namespace ShrimpFlourControl
             this.groupBox_AGVinfo = new System.Windows.Forms.GroupBox();
             this.txtMsg = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gvMissionList = new System.Windows.Forms.DataGridView();
             this.AGV_StatetextBox = new System.Windows.Forms.TextBox();
             this.AGV_NodetextBox = new System.Windows.Forms.TextBox();
             this.AGV_IDtextBox = new System.Windows.Forms.TextBox();
@@ -76,19 +77,18 @@ namespace ShrimpFlourControl
             this.label_AGVID = new System.Windows.Forms.Label();
             this.groupBox_stationinfo = new System.Windows.Forms.GroupBox();
             this.gvOrder = new System.Windows.Forms.DataGridView();
-            this.btnAddOrder = new System.Windows.Forms.Button();
             this.OrderId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gvMissionList = new System.Windows.Forms.DataGridView();
+            this.btnAddOrder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_mapViewer)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.groupBox_AGVinfo.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).BeginInit();
             this.groupBox_stationinfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvOrder)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).BeginInit();
             this.SuspendLayout();
             // 
             // connectionToolStripMenuItem
@@ -155,7 +155,7 @@ namespace ShrimpFlourControl
             this.檔案ToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1799, 27);
+            this.menuStrip.Size = new System.Drawing.Size(1799, 28);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -165,7 +165,7 @@ namespace ShrimpFlourControl
             this.connectToolStripMenuItem3,
             this.testRunToolStripMenuItem});
             this.connectionToolStripMenuItem3.Name = "connectionToolStripMenuItem3";
-            this.connectionToolStripMenuItem3.Size = new System.Drawing.Size(102, 23);
+            this.connectionToolStripMenuItem3.Size = new System.Drawing.Size(102, 24);
             this.connectionToolStripMenuItem3.Text = "Connection";
             // 
             // connectToolStripMenuItem3
@@ -189,7 +189,7 @@ namespace ShrimpFlourControl
             this.save_to_dbToolStripMenuItem,
             this.clear_dbToolStripMenuItem});
             this.檔案ToolStripMenuItem.Name = "檔案ToolStripMenuItem";
-            this.檔案ToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
+            this.檔案ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.檔案ToolStripMenuItem.Text = "檔案";
             // 
             // open_file_from_dbToolStripMenuItem
@@ -231,7 +231,7 @@ namespace ShrimpFlourControl
             this.toolStripSplitButton1,
             this.toolStripSeparator3,
             this.draw_gridtoolStripButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 27);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1799, 35);
             this.toolStrip1.TabIndex = 2;
@@ -411,12 +411,12 @@ namespace ShrimpFlourControl
             this.groupBox_AGVinfo.Controls.Add(this.label_AGVID);
             this.groupBox_AGVinfo.Controls.Add(this.groupBox_stationinfo);
             this.groupBox_AGVinfo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox_AGVinfo.Location = new System.Drawing.Point(1435, 62);
+            this.groupBox_AGVinfo.Location = new System.Drawing.Point(1435, 63);
             this.groupBox_AGVinfo.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox_AGVinfo.Name = "groupBox_AGVinfo";
             this.groupBox_AGVinfo.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox_AGVinfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox_AGVinfo.Size = new System.Drawing.Size(364, 832);
+            this.groupBox_AGVinfo.Size = new System.Drawing.Size(364, 831);
             this.groupBox_AGVinfo.TabIndex = 3;
             this.groupBox_AGVinfo.TabStop = false;
             this.groupBox_AGVinfo.Text = "AGV information";
@@ -441,6 +441,18 @@ namespace ShrimpFlourControl
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Mission List";
+            // 
+            // gvMissionList
+            // 
+            this.gvMissionList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvMissionList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gvMissionList.Location = new System.Drawing.Point(4, 22);
+            this.gvMissionList.Name = "gvMissionList";
+            this.gvMissionList.RowHeadersVisible = false;
+            this.gvMissionList.RowHeadersWidth = 51;
+            this.gvMissionList.RowTemplate.Height = 27;
+            this.gvMissionList.Size = new System.Drawing.Size(348, 391);
+            this.gvMissionList.TabIndex = 0;
             // 
             // AGV_StatetextBox
             // 
@@ -526,16 +538,6 @@ namespace ShrimpFlourControl
             this.gvOrder.Size = new System.Drawing.Size(339, 142);
             this.gvOrder.TabIndex = 1;
             // 
-            // btnAddOrder
-            // 
-            this.btnAddOrder.Location = new System.Drawing.Point(125, 0);
-            this.btnAddOrder.Name = "btnAddOrder";
-            this.btnAddOrder.Size = new System.Drawing.Size(75, 23);
-            this.btnAddOrder.TabIndex = 0;
-            this.btnAddOrder.Text = "新增Order";
-            this.btnAddOrder.UseVisualStyleBackColor = true;
-            this.btnAddOrder.Click += new System.EventHandler(this.btnAddOrder_Click);
-            // 
             // OrderId
             // 
             this.OrderId.DataPropertyName = "OrderId";
@@ -560,17 +562,15 @@ namespace ShrimpFlourControl
             this.ProductName.MinimumWidth = 6;
             this.ProductName.Name = "ProductName";
             // 
-            // gvMissionList
+            // btnAddOrder
             // 
-            this.gvMissionList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvMissionList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gvMissionList.Location = new System.Drawing.Point(4, 22);
-            this.gvMissionList.Name = "gvMissionList";
-            this.gvMissionList.RowHeadersVisible = false;
-            this.gvMissionList.RowHeadersWidth = 51;
-            this.gvMissionList.RowTemplate.Height = 27;
-            this.gvMissionList.Size = new System.Drawing.Size(348, 391);
-            this.gvMissionList.TabIndex = 0;
+            this.btnAddOrder.Location = new System.Drawing.Point(125, 0);
+            this.btnAddOrder.Name = "btnAddOrder";
+            this.btnAddOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnAddOrder.TabIndex = 0;
+            this.btnAddOrder.Text = "新增Order";
+            this.btnAddOrder.UseVisualStyleBackColor = true;
+            this.btnAddOrder.Click += new System.EventHandler(this.btnAddOrder_Click);
             // 
             // MainWindow
             // 
@@ -594,9 +594,9 @@ namespace ShrimpFlourControl
             this.groupBox_AGVinfo.ResumeLayout(false);
             this.groupBox_AGVinfo.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).EndInit();
             this.groupBox_stationinfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gvOrder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

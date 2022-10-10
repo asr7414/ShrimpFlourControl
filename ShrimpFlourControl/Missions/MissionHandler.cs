@@ -19,56 +19,19 @@ namespace ShrimpFlourControl.Missions
         public MissionHandler(SFCServer SFC)
         {
             this.SFC = SFC;
-            //id0=m1
-            //id1=m2
-            //id6=m3
-            //MissionList = new List<Mission>
-            //{
-            //    new Mission{
-            //        MissionId=1,
-            //        StationRouter=new List<Station>{
-            //            this.SFC.Stations.Where(s => s.StationId == 1).First(),
-            //            this.SFC.Stations.Where(s => s.StationId == 6).First(),
-            //            this.SFC.Stations.Where(s => s.StationId == 0).First(),}
-            //        ,StationProcessTime=new List<int>(),
-            //    },
-            //    new Mission{
-            //        MissionId=2,
-            //        StationRouter=new List<Station>{
-            //            this.SFC.Stations.Where(s => s.StationId == 0).First(),
-            //            this.SFC.Stations.Where(s => s.StationId == 6).First(),
-            //            this.SFC.Stations.Where(s => s.StationId == 1).First(),}
-            //    },
-            //    new Mission{
-            //       MissionId=3,
-            //        StationRouter=new List<Station>{
-            //            this.SFC.Stations.Where(s => s.StationId == 6).First(),
-            //            this.SFC.Stations.Where(s => s.StationId == 1).First(),
-            //            this.SFC.Stations.Where(s => s.StationId == 0).First(),}
-            //    }
-            //};
+            
         }
-        public Mission GetMissionByIdOld(int id)
-        {
-            return MissionList.Where(a => a.MissionId == id).FirstOrDefault();
-        }
-        public Mission GetMissionById(int id)
-        {
-            var rst = SFC.Orders
-                .Where(a => a.OrderId == id)
-                .Select(a => new Mission
-                {
-                    OrderId = a.OrderId,
-                    StationRouter = a.Product.ProductOperactionList.Select(po => this.SFC.Stations.Where(s => s.StationId == po.StationId).First()).ToList()
-                }).FirstOrDefault();
-            return rst;
-            //return MissionList.Where(a => a.MissionId == id).FirstOrDefault();
-        }
-        public List<Mission> GetGoodSequenceMission(List<int> GoodSequence)
+
+        /// <summary>
+        /// 依照optimalSequence 產生MissionList
+        /// </summary>
+        /// <param name="optimalSequence"></param>
+        /// <returns></returns>
+        public List<Mission> GetOptimalSequenceMission(List<int> optimalSequence)
         {
             List<Mission> missions = new List<Mission>();
             int idx = 1;
-            GoodSequence.ForEach(orderId =>
+            optimalSequence.ForEach(orderId =>
             {
                 var order = SFC.Orders.Where(o => o.OrderId == orderId).First();
                 var ProductOperactionListIndex = missions.Where(a => a.OrderId == orderId).Count();
@@ -95,10 +58,16 @@ namespace ShrimpFlourControl.Missions
             var sss = SFC.Orders.Select(a => a.Product);
             throw new NotImplementedException();
         }
-        public void RunMissionList(List<int> GoodSequence)
+        public List<int> GenerateOptimalSequence()
+        {
+            //TODO 學生作業, 用SFC.Orders 產生OptimalSequence
+            //SFC.Orders
+            return new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
+        }
+        public void RunMissionList(List<int> optimalSequence)
         {
             string finalMsg = "";
-            this.MissionListExisted = GetGoodSequenceMission(GoodSequence);
+            this.MissionListExisted = GetOptimalSequenceMission(optimalSequence);
             
             //dataGridView.DataSource = MissionListExisted;
             var stationlist = MissionListExisted.SelectMany(a => a.StationRouter).Distinct().ToList();

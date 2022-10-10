@@ -226,7 +226,6 @@ namespace ShrimpFlourControl.Communications
             {
                 while (dataReader.Read())
                 {
-                    //TODO 把remark讀進來 OK
                     var pathID = dataReader.GetInt32(0);
                     var type = dataReader.GetInt32(1);
                     var refererNodeID = dataReader.GetInt32(2);
@@ -280,7 +279,6 @@ namespace ShrimpFlourControl.Communications
         //
         public List<Product> GetAllProducts()
         {
-            //TODO : 請學生做, 須包含ProductOpertionList OK
             const string sqlString = "SELECT * FROM `Product` WHERE 1";
             MySqlCommand sqlCmd = new MySqlCommand(sqlString, _mySqlConnection);
             MySqlDataReader dataReader = sqlCmd.ExecuteReader();

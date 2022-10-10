@@ -480,9 +480,9 @@ namespace ShrimpFlourControl
         {
             MissionHandler missionHandler = new MissionHandler(this.SFC);
             
-            List<int> goodSequence = new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
+            List<int> optimalSequence = new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
             
-            var misssions = missionHandler.GetGoodSequenceMission(goodSequence);
+            var misssions = missionHandler.GetOptimalSequenceMission(optimalSequence);
             gvMissionList.DataSource = misssions;
             //missionHandler.RunMissionList(goodSequence);
             

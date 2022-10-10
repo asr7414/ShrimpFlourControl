@@ -26,6 +26,7 @@ namespace ShrimpFlourControl.Vehicles
         }
         public void Move(List<Node> route)
         {
+            //TODO 想辦法把AGVHandler.SendAGVTo() 放到這個Move()裡面
             if (this.State != AGVStates.Idle && route.First() == this.CurrentNode)
             {                
                 _route = route;
@@ -36,9 +37,9 @@ namespace ShrimpFlourControl.Vehicles
         {
             if (this.State != AGVStates.Idle)
             {
-                this.State = AGVStates.Loading;
-                Thread.Sleep(1000);
-                this.State = AGVStates.Idle;
+                //this.State = AGVStates.Loading;
+                //Thread.Sleep(1000);
+                //this.State = AGVStates.Idle;
             }
             return true;
         }
