@@ -118,7 +118,11 @@ namespace ShrimpFlourControl
         }
 
         #endregion
-
+        #region 新增視覺物件參數
+        int count = 0;
+        Node StartNode, EndNode, CurveNode1, CurveNode2;
+        Point CurveCornerPoint = new Point(-1, -1);
+        #endregion
         #region MapViewer Callbacks
         private void pictureBox_mapViewer_MouseDown(object sender, MouseEventArgs e)
         {
@@ -126,247 +130,248 @@ namespace ShrimpFlourControl
             //{
 
             //}
-            //if (e.Button == MouseButtons.Left)
-            //{
-            //    var nearestNode = _mapDrawer.GetNode(e.Location);
-            //    switch (editMode)
-            //    {
-            //        case EditMode.Node:
-            //            int newNodeID = 0;
-            //            if (SFC.Nodes.Count != 0)
-            //            {
-            //                newNodeID = SFC.Nodes.Last().ID + 1;
-            //            }
-            //            NodeLocation = e.Location;
-            //            if (NodeLocation.X % initialgridsize != 0 || NodeLocation.Y % initialgridsize != 0)
-            //            {
-            //                var nearpointx = NodeLocation.X % initialgridsize;
-            //                var nearpointy = NodeLocation.Y % initialgridsize;
-            //                NodeLocation.X -= nearpointx;
-            //                NodeLocation.Y -= nearpointy;
-            //            }
-            //            var newNode = new Node(newNodeID, NodeLocation.X, NodeLocation.Y);
-            //            SFC.Nodes.Add(newNode);
-            //            Debug.WriteLine("new node id " + newNodeID + "node x " + newNode.PosX + "node y " + newNode.PosY);
-            //            break;
+            if (e.Button == MouseButtons.Left)
+            {
+                var nearestNode = _mapDrawer.GetNode(e.Location);
+                switch (editMode)
+                {
+                    case EditMode.Node:
+                        int newNodeID = 0;
+                        Point NodeLocation;
+                        int initialgridsize = 20;
+                        if (SFC.Nodes.Count != 0)
+                        {
+                            newNodeID = SFC.Nodes.Last().ID + 1;
+                        }
+                        NodeLocation = e.Location;
+                        if (NodeLocation.X % initialgridsize != 0 || NodeLocation.Y % initialgridsize != 0)
+                        {
+                            var nearpointx = NodeLocation.X % initialgridsize;
+                            var nearpointy = NodeLocation.Y % initialgridsize;
+                            NodeLocation.X -= nearpointx;
+                            NodeLocation.Y -= nearpointy;
+                        }
+                        var newNode = new Node(newNodeID, NodeLocation.X, NodeLocation.Y);
+                        SFC.Nodes.Add(newNode);
+                        Debug.WriteLine("new node id " + newNodeID + "node x " + newNode.PosX + "node y " + newNode.PosY);
+                        break;
 
-            //        case EditMode.AddCar:
-            //            int newAGVID = 0;
-            //            if (SFC.AGVs.Count != 0)
-            //            {
-            //                newAGVID = SFC.AGVs.Last().AgvId + 1;
-            //            }
-            //            if (nearestNode != null)
-            //            {
-            //                Debug.WriteLine($"nearest node: {nearestNode.ID}");
-            //                var newAGV = new SimulatedAGV(newAGVID, nearestNode);
-            //                SFC.AGVs.Add(newAGV);
-            //            }
-            //            break;
+                    case EditMode.AddCar:
+                        int newAGVID = 0;
+                        if (SFC.AGVs.Count != 0)
+                        {
+                            newAGVID = SFC.AGVs.Last().AgvId + 1;
+                        }
+                        if (nearestNode != null)
+                        {
+                            Debug.WriteLine($"nearest node: {nearestNode.ID}");
+                            var newAGV = new SimulatedAGV(newAGVID, nearestNode);
+                            SFC.AGVs.Add(newAGV);
+                        }
+                        break;
 
-            //        case EditMode.AddStation:
-            //            int newStationID = 0;
-            //            if (SFC.Stations.Count != 0)
-            //            {
-            //                newStationID = SFC.Stations.Last().StationId + 1;
-            //            }
-            //            if (nearestNode != null)
-            //            {
-            //                var newStation = new Station(newStationID, stationtype, nearestNode, e.Location.X - nearestNode.PosX, e.Location.Y - nearestNode.PosY);
-            //                newStation.size_length = sta_length;
-            //                newStation.size_width = sta_width;
-            //                SFC.Stations.Add(newStation);
-            //            }
-            //            else
-            //            {
-            //                MessageBox.Show("No Node Nearby", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //            }
-            //            break;
+                    case EditMode.AddStation:
+                        int newStationID = 0;
+                        if (SFC.Stations.Count != 0)
+                        {
+                            newStationID = SFC.Stations.Last().StationId + 1;
+                        }
+                        if (nearestNode != null)
+                        {
+                            //var newStation = new Station(newStationID, stationtype, nearestNode, e.Location.X - nearestNode.PosX, e.Location.Y - nearestNode.PosY);
+                            //newStation.size_length = sta_length;
+                            //newStation.size_width = sta_width;
+                            //SFC.Stations.Add(newStation);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No Node Nearby", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        break;
 
-            //        case EditMode.SelectMode:
-            //            SFC.SelectedStation = _mapDrawer.GetStation(e.Location);
-            //            SFC.SelectedAGV = _mapDrawer.GetAGV(e.Location);
-            //            SFC.SelectedNode = _mapDrawer.GetNode(e.Location);
-            //            SFC.SelectState = true;
+                    case EditMode.SelectMode:
+                        SFC.SelectedStation = _mapDrawer.GetStation(e.Location);
+                        SFC.SelectedAGV = _mapDrawer.GetAGV(e.Location);
+                        SFC.SelectedNode = _mapDrawer.GetNode(e.Location);
+                        SFC.SelectState = true;
 
-            //            break;
+                        break;
 
-            //        case EditMode.DeleteMode:
-            //            if (SFC.SelectState == true)
-            //            {
-            //                SFC.SelectedAGV = _mapDrawer.GetAGV(e.Location);
-            //                if (SFC.SelectedAGV != null)
-            //                {
-            //                    SFC.AGVs.Remove(SFC.SelectedAGV);
-            //                    SFC.SelectedAGV = null;
-            //                    SFC.SelectState = false;
-            //                }
+                    case EditMode.DeleteMode:
+                        if (SFC.SelectState == true)
+                        {
+                            SFC.SelectedAGV = _mapDrawer.GetAGV(e.Location);
+                            if (SFC.SelectedAGV != null)
+                            {
+                                SFC.AGVs.Remove(SFC.SelectedAGV);
+                                SFC.SelectedAGV = null;
+                                SFC.SelectState = false;
+                            }
 
-            //                SFC.SelectedStation = _mapDrawer.GetStation(e.Location);
-            //                if (SFC.SelectedStation != null)
-            //                {
-            //                    SFC.Stations.Remove(SFC.SelectedStation);
-            //                    SFC.SelectedStation = null;
-            //                    SFC.SelectState = false;
-            //                }
+                            SFC.SelectedStation = _mapDrawer.GetStation(e.Location);
+                            if (SFC.SelectedStation != null)
+                            {
+                                SFC.Stations.Remove(SFC.SelectedStation);
+                                SFC.SelectedStation = null;
+                                SFC.SelectState = false;
+                            }
 
-            //                //selectedLine = GetLineByMousePosition(e.Location);
-            //                //if (selectedLine != null)
-            //                //{
-            //                //    Lines.Remove(selectedLine);
-            //                //    selectedLine = null;
-            //                //    selectState = false;
-            //                //}
-            //                SFC.SelectedNode = _mapDrawer.GetNode(e.Location);
-            //                if (SFC.SelectedNode != null)
-            //                {
-            //                    SFC.Nodes.Remove(SFC.SelectedNode);
-            //                    SFC.SelectedNode = null;
-            //                    SFC.SelectState = false;
-            //                }
-            //            }
-            //            break;
+                            //selectedLine = GetLineByMousePosition(e.Location);
+                            //if (selectedLine != null)
+                            //{
+                            //    Lines.Remove(selectedLine);
+                            //    selectedLine = null;
+                            //    selectState = false;
+                            //}
+                            SFC.SelectedNode = _mapDrawer.GetNode(e.Location);
+                            if (SFC.SelectedNode != null)
+                            {
+                                SFC.Nodes.Remove(SFC.SelectedNode);
+                                SFC.SelectedNode = null;
+                                SFC.SelectState = false;
+                            }
+                        }
+                        break;
 
-            //        case EditMode.DrawLine:
-            //            int newPathID = 0;
-            //            int count = 0;
-            //            Node StartNode, EndNode;
-            //            if (count == 0)
-            //            {
-            //                double nowx = e.Location.X;
-            //                double nowy = e.Location.Y;
-            //                double dis, mindis = double.PositiveInfinity;
-            //                for (int i = 0; i < SFC.Nodes.Count; i++)
-            //                {
-            //                    dis = Math.Pow(Math.Pow(nowx - SFC.Nodes[i].PosX, 2) + Math.Pow(nowy - SFC.Nodes[i].PosY, 2), 0.5);
-            //                    if (dis < mindis && dis < 30)
-            //                    {
-            //                        mindis = dis;
-            //                        StartNode = SFC.Nodes[i];
-            //                    }
-            //                }
-            //                count++;
-            //            }
-            //            else if (count == 1)
-            //            {
-            //                double nowx = e.Location.X;
-            //                double nowy = e.Location.Y;
-            //                double dis, mindis = double.PositiveInfinity;
-            //                for (int i = 0; i < SFC.Nodes.Count; i++)
-            //                {
-            //                    dis = Math.Pow(Math.Pow(nowx - SFC.Nodes[i].PosX, 2) + Math.Pow(nowy - SFC.Nodes[i].PosY, 2), 0.5);
-            //                    if (dis < mindis && dis < 30)
-            //                    {
-            //                        mindis = dis;
-            //                        EndNode = SFC.Nodes[i];
-            //                    }
-            //                }
-            //                count++;
-            //            }
-            //            if (count == 2)
-            //            {
-            //                if (SFC.Paths.Count != 0)
-            //                {
-            //                    newPathID = SFC.Paths.Last().ID + 1;
-            //                }
-            //                if (StartNode != EndNode)
-            //                {
-            //                    var newPath = new Path(newPathID, StartNode, EndNode);
-            //                    SFC.Paths.Add(newPath);
-            //                }
-            //                count = 0;
-            //            }
-            //            break;
-            //        case EditMode.DrawCurveAny: ///新增弧線                         
-            //            if (_curveNode1 == null)
-            //            {
-            //                if (nearestNode != null)
-            //                {
-            //                    _curveNode1 = nearestNode;
-            //                }
-            //            }
-            //            else if (_curveCornerPoint == new Point(-1, -1))
-            //            {
-            //                _curveCornerPoint = e.Location;
-            //            }
-            //            else if (_curveNode2 == null)
-            //            {
-            //                if (nearestNode != null)
-            //                {
-            //                    _curveNode2 = nearestNode;
-            //                    var newID = SFC.Paths.Count > 0 ? SFC.Paths.Last().ID + 1 : 0;
-            //                    Paths.Add(new Path(newID, _curveNode1, _curveNode2, Path.PathType.CurveAny, _curveCornerPoint.X, _curveCornerPoint.Y, 30));
-            //                    _curveNode1 = null;
-            //                    _curveNode2 = null;
-            //                    _curveCornerPoint = new Point(-1, -1);
-            //                }
-            //            }
-            //            break;
-            //        case EditMode.DrawCurve90:
-            //            if (_curveNode1 == null)
-            //            {
-            //                if (nearestNode != null)
-            //                {
-            //                    _curveNode1 = nearestNode;
-            //                }
-            //            }
-            //            else if (_curveCornerPoint == new Point(-1, -1))
-            //            {
-            //                _curveCornerPoint = e.Location;
-            //            }
-            //            else if (_curveNode2 == null)
-            //            {
-            //                if (nearestNode != null)
-            //                {
-            //                    _curveNode2 = nearestNode;
+                    case EditMode.DrawLine:
+                        int newPathID = 0;
+                        
+                        if (count == 0)
+                        {
+                            double nowx = e.Location.X;
+                            double nowy = e.Location.Y;
+                            double dis, mindis = double.PositiveInfinity;
+                            for (int i = 0; i < SFC.Nodes.Count; i++)
+                            {
+                                dis = Math.Pow(Math.Pow(nowx - SFC.Nodes[i].PosX, 2) + Math.Pow(nowy - SFC.Nodes[i].PosY, 2), 0.5);
+                                if (dis < mindis && dis < 30)
+                                {
+                                    mindis = dis;
+                                    StartNode = SFC.Nodes[i];
+                                }
+                            }
+                            count++;
+                        }
+                        else if (count == 1)
+                        {
+                            double nowx = e.Location.X;
+                            double nowy = e.Location.Y;
+                            double dis, mindis = double.PositiveInfinity;
+                            for (int i = 0; i < SFC.Nodes.Count; i++)
+                            {
+                                dis = Math.Pow(Math.Pow(nowx - SFC.Nodes[i].PosX, 2) + Math.Pow(nowy - SFC.Nodes[i].PosY, 2), 0.5);
+                                if (dis < mindis && dis < 30)
+                                {
+                                    mindis = dis;
+                                    EndNode = SFC.Nodes[i];
+                                }
+                            }
+                            count++;
+                        }
+                        if (count == 2)
+                        {
+                            if (SFC.Paths.Count != 0)
+                            {
+                                newPathID = SFC.Paths.Last().ID + 1;
+                            }
+                            if (StartNode != EndNode)
+                            {
+                                var newPath = new Path(newPathID, StartNode, EndNode);
+                                SFC.Paths.Add(newPath);
+                            }
+                            count = 0;
+                        }
+                        break;
+                    case EditMode.DrawCurveAny: ///新增弧線                         
+                        if ( CurveNode1 == null)
+                        {
+                            if (nearestNode != null)
+                            {
+                                CurveNode1 = nearestNode;
+                            }
+                        }
+                        else if (CurveCornerPoint == new Point(-1, -1))
+                        {
+                            CurveCornerPoint = e.Location;
+                        }
+                        else if ( CurveNode2 == null)
+                        {
+                            if (nearestNode != null)
+                            {
+                                CurveNode2 = nearestNode;
+                                var newID = SFC.Paths.Count > 0 ? SFC.Paths.Last().ID + 1 : 0;
+                                SFC.Paths.Add(new Path(newID, CurveNode1,  CurveNode2, Path.PathType.CurveAny, CurveCornerPoint.X, CurveCornerPoint.Y, 30));
+                                CurveNode1 = null;
+                                CurveNode2 = null;
+                                CurveCornerPoint = new Point(-1, -1);
+                            }
+                        }
+                        break;
+                    case EditMode.DrawCurve90:
+                        if ( CurveNode1 == null)
+                        {
+                            if (nearestNode != null)
+                            {
+                                 CurveNode1 = nearestNode;
+                            }
+                        }
+                        else if (CurveCornerPoint == new Point(-1, -1))
+                        {
+                            CurveCornerPoint = e.Location;
+                        }
+                        else if ( CurveNode2 == null)
+                        {
+                            if (nearestNode != null)
+                            {
+                                 CurveNode2 = nearestNode;
 
-            //                    Vector2 v1c = new Vector2(_curveCornerPoint.X - _curveNode1.PosX, _curveCornerPoint.Y - _curveNode1.PosY);
-            //                    Vector2 v12 = new Vector2(_curveNode2.PosX - _curveNode1.PosX, _curveNode2.PosY - _curveNode1.PosY);
-            //                    var v1c12Cross = Vector3.Cross(new Vector3(v1c, 0), new Vector3(v12, 0));
-            //                    var quadrantcheck = v12.X * v12.Y;
-            //                    Debug.WriteLine(v12);
-            //                    Debug.WriteLine(quadrantcheck);
-            //                    Debug.WriteLine(v1c12Cross);
-            //                    if (quadrantcheck < 0) ///v12 一三象限
-            //                    {
-            //                        if (v1c12Cross.Z > 0)
-            //                        {
-            //                            _curveCornerPoint = new Point(_curveNode1.PosX, _curveNode2.PosY);
-            //                        }
-            //                        else
-            //                        {
-            //                            _curveCornerPoint = new Point(_curveNode2.PosX, _curveNode1.PosY);
-            //                        }
-            //                    }
-            //                    else if (quadrantcheck > 0) ///二四象限
-            //                    {
-            //                        if (v1c12Cross.Z < 0)
-            //                        {
-            //                            _curveCornerPoint = new Point(_curveNode1.PosX, _curveNode2.PosY);
-            //                        }
-            //                        else
-            //                        {
-            //                            _curveCornerPoint = new Point(_curveNode2.PosX, _curveNode1.PosY);
-            //                        }
+                                Vector2 v1c = new Vector2( CurveCornerPoint.X -  CurveNode1.PosX,  CurveCornerPoint.Y -  CurveNode1.PosY);
+                                Vector2 v12 = new Vector2( CurveNode2.PosX -  CurveNode1.PosX,  CurveNode2.PosY -  CurveNode1.PosY);
+                                var v1c12Cross = Vector3.Cross(new Vector3(v1c, 0), new Vector3(v12, 0));
+                                var quadrantcheck = v12.X * v12.Y;
+                                Debug.WriteLine(v12);
+                                Debug.WriteLine(quadrantcheck);
+                                Debug.WriteLine(v1c12Cross);
+                                if (quadrantcheck < 0) ///v12 一三象限
+                                {
+                                    if (v1c12Cross.Z > 0)
+                                    {
+                                         CurveCornerPoint = new Point( CurveNode1.PosX,  CurveNode2.PosY);
+                                    }
+                                    else
+                                    {
+                                         CurveCornerPoint = new Point( CurveNode2.PosX,  CurveNode1.PosY);
+                                    }
+                                }
+                                else if (quadrantcheck > 0) ///二四象限
+                                {
+                                    if (v1c12Cross.Z < 0)
+                                    {
+                                         CurveCornerPoint = new Point( CurveNode1.PosX,  CurveNode2.PosY);
+                                    }
+                                    else
+                                    {
+                                         CurveCornerPoint = new Point( CurveNode2.PosX,  CurveNode1.PosY);
+                                    }
 
-            //                    }
-            //                    else
-            //                    {
-            //                        MessageBox.Show("路徑水平或垂直，不須直角彎", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("路徑水平或垂直，不須直角彎", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
 
-            //                    var newID = SFC.Paths.Count > 0 ? Paths.Last().ID + 1 : 0;
-            //                    SFC.Paths.Add(new Path(newID, _curveNode1, _curveNode2, Path.PathType.Curve90, _curveCornerPoint.X, _curveCornerPoint.Y, 30));
-            //                    _curveNode1 = null;
-            //                    _curveNode2 = null;
-            //                    _curveCornerPoint = new Point(-1, -1);
-            //                }
-            //            }
-            //            break;
-            //        case EditMode.PathSimulation:
-            //            break;
-            //    }
-            //}
+                                var newID = SFC.Paths.Count > 0 ? SFC.Paths.Last().ID + 1 : 0;
+                                SFC.Paths.Add(new Path(newID,  CurveNode1,  CurveNode2, Path.PathType.Curve90,  CurveCornerPoint.X,  CurveCornerPoint.Y, 30));
+                                 CurveNode1 = null;
+                                 CurveNode2 = null;
+                                 CurveCornerPoint = new Point(-1, -1);
+                            }
+                        }
+                        break;
+                    case EditMode.PathSimulation:
+                        break;
+                }
+            }
             //SFC.SelectedStation = _mapDrawer.GetStation(e.Location);
             //SFC.SelectedAGV = _mapDrawer.GetAGV(e.Location);
             //SFC.SelectedNode = _mapDrawer.GetNode(e.Location);
