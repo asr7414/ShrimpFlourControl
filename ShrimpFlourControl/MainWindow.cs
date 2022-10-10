@@ -32,6 +32,7 @@ namespace ShrimpFlourControl
         private readonly Database _dataBase;
         private EditMode editMode;
         private Station.StationType stationType;
+        public List<int> goodSequence = new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
         public enum EditMode
         {
             AddCar,
@@ -473,12 +474,13 @@ namespace ShrimpFlourControl
         private void testRunToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MissionHandler missionHandler = new MissionHandler(this.SFC);
-            missionHandler.dataGridView = gvMissionList;
+            
             List<int> goodSequence = new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
-            //var d = (SimulatedAGV)this.SFC.AGVs.FirstOrDefault();
-           
-            missionHandler.RunMissionList(goodSequence);
-            //this.AGVHandler.SendAGVTo();
+            
+            var misssions = missionHandler.GetGoodSequenceMission(goodSequence);
+            gvMissionList.DataSource = misssions;
+            //missionHandler.RunMissionList(goodSequence);
+            
         }
         private void InitialListView()
         {
@@ -505,14 +507,23 @@ namespace ShrimpFlourControl
 
         private void btnAddOrder_Click(object sender, EventArgs e)
         {
-            frmAddOrder frm = new frmAddOrder();
+            frmAddOrder frm = new frmAddOrder(SFC);
             if (frm.ShowDialog() == DialogResult.OK)
             {
+                frm.order.OrderId = SFC.Orders.Count + 1;
                 SFC.Orders.Add(frm.order);
+                gvOrder.DataSource = null;
+                gvOrder.DataSource = SFC.Orders.Select(o => new { o.OrderId, o.Product.ProductId, ProductName = o.Product.Name }).ToList();
+                var mission = SFC.Orders.Select(a => a.Product).SelectMany(a => a.ProductOperactionList);
+                gvMissionList.DataSource = null;
+
             }
         }
 
-
+        private void btnGenerateMission_Click(object sender, EventArgs e)
+        {
+           
+        }
     }
 }
 

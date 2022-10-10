@@ -36,7 +36,9 @@ namespace ShrimpFlourControl.Vehicles
         {
             if (this.State != AGVStates.Idle)
             {
-
+                this.State = AGVStates.Loading;
+                Thread.Sleep(1000);
+                this.State = AGVStates.Idle;
             }
             return true;
         }

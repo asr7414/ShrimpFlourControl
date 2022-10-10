@@ -60,9 +60,10 @@ namespace ShrimpFlourControl
                 AGVs = _dataBase.GetAllAGVs(Nodes);
                 Paths = _dataBase.GetAllPaths(Nodes);
                 Stations = _dataBase.GetAllStations(Nodes);
-                Missions = _dataBase.GetAllMissions();
+                //Missions = _dataBase.GetAllMissions();
                 Products = _dataBase.GetAllProducts();
                 ProductOperactions = _dataBase.GetAllProductOperactions();
+                Products.ForEach(p => p.ProductOperactionList = ProductOperactions.Where(po => po.ProductID == p.ProductId).ToList());
             }
 
             return result;

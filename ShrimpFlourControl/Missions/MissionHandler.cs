@@ -22,40 +22,71 @@ namespace ShrimpFlourControl.Missions
             //id0=m1
             //id1=m2
             //id6=m3
-            MissionList = new List<Mission>
-            {
-                new Mission{
-                    MissionId=1,
-                    StationRouter=new List<Station>{
-                        this.SFC.Stations.Where(s => s.StationId == 1).First(),
-                        this.SFC.Stations.Where(s => s.StationId == 6).First(),
-                        this.SFC.Stations.Where(s => s.StationId == 0).First(),}
-                    ,StationProcessTime=new List<int>(),
-                },
-                new Mission{
-                    MissionId=2,
-                    StationRouter=new List<Station>{
-                        this.SFC.Stations.Where(s => s.StationId == 0).First(),
-                        this.SFC.Stations.Where(s => s.StationId == 6).First(),
-                        this.SFC.Stations.Where(s => s.StationId == 1).First(),}
-                },
-                new Mission{
-                   MissionId=3,
-                    StationRouter=new List<Station>{
-                        this.SFC.Stations.Where(s => s.StationId == 6).First(),
-                        this.SFC.Stations.Where(s => s.StationId == 1).First(),
-                        this.SFC.Stations.Where(s => s.StationId == 0).First(),}
-                }
-            };
+            //MissionList = new List<Mission>
+            //{
+            //    new Mission{
+            //        MissionId=1,
+            //        StationRouter=new List<Station>{
+            //            this.SFC.Stations.Where(s => s.StationId == 1).First(),
+            //            this.SFC.Stations.Where(s => s.StationId == 6).First(),
+            //            this.SFC.Stations.Where(s => s.StationId == 0).First(),}
+            //        ,StationProcessTime=new List<int>(),
+            //    },
+            //    new Mission{
+            //        MissionId=2,
+            //        StationRouter=new List<Station>{
+            //            this.SFC.Stations.Where(s => s.StationId == 0).First(),
+            //            this.SFC.Stations.Where(s => s.StationId == 6).First(),
+            //            this.SFC.Stations.Where(s => s.StationId == 1).First(),}
+            //    },
+            //    new Mission{
+            //       MissionId=3,
+            //        StationRouter=new List<Station>{
+            //            this.SFC.Stations.Where(s => s.StationId == 6).First(),
+            //            this.SFC.Stations.Where(s => s.StationId == 1).First(),
+            //            this.SFC.Stations.Where(s => s.StationId == 0).First(),}
+            //    }
+            //};
         }
-        public Mission GetMissionById(int id)
+        public Mission GetMissionByIdOld(int id)
         {
             return MissionList.Where(a => a.MissionId == id).FirstOrDefault();
         }
-        
+        public Mission GetMissionById(int id)
+        {
+            var rst = SFC.Orders
+                .Where(a => a.OrderId == id)
+                .Select(a => new Mission
+                {
+                    OrderId = a.OrderId,
+                    StationRouter = a.Product.ProductOperactionList.Select(po => this.SFC.Stations.Where(s => s.StationId == po.StationId).First()).ToList()
+                }).FirstOrDefault();
+            return rst;
+            //return MissionList.Where(a => a.MissionId == id).FirstOrDefault();
+        }
         public List<Mission> GetGoodSequenceMission(List<int> GoodSequence)
         {
-            return GoodSequence.Select(a => GetMissionById(a)).ToList();
+            List<Mission> missions = new List<Mission>();
+            int idx = 1;
+            GoodSequence.ForEach(orderId =>
+            {
+                var order = SFC.Orders.Where(o => o.OrderId == orderId).First();
+                var ProductOperactionListIndex = missions.Where(a => a.OrderId == orderId).Count();
+                var stationId = order.Product.ProductOperactionList[ProductOperactionListIndex].StationId;
+                var station = SFC.Stations.Where(a => a.StationId == stationId).FirstOrDefault();
+                Mission mission = new Mission
+                {
+                    MissionId = idx++,
+                    OrderId = orderId,
+                    Order = order,
+                    ProductOperactionNo = ProductOperactionListIndex + 1,
+                    StationId = stationId,
+                    Station = station
+                };
+                missions.Add(mission);
+            });
+            return missions;
+            //return GoodSequence.Select(a => GetMissionById(a)).ToList();
             //List<int> goodSequence = new List<int>() { 2,1,3,1,1,2,3,2,3};
             //OOXX(goodSequence);
         }
@@ -68,7 +99,8 @@ namespace ShrimpFlourControl.Missions
         {
             string finalMsg = "";
             this.MissionListExisted = GetGoodSequenceMission(GoodSequence);
-            dataGridView.DataSource = MissionListExisted;
+            
+            //dataGridView.DataSource = MissionListExisted;
             var stationlist = MissionListExisted.SelectMany(a => a.StationRouter).Distinct().ToList();
             MissionListExisted.ForEach(mission =>
             {

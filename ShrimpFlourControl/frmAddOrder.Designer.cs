@@ -103,6 +103,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmAddOrder";
             this.Text = "AddOrder";
+            this.Load += new System.EventHandler(this.frmAddOrder_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

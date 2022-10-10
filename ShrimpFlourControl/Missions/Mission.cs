@@ -30,19 +30,24 @@ namespace ShrimpFlourControl.Missions
         /// <summary>
         /// 該ORDER目前是第幾個工序
         /// </summary>
-        public int ProdcutOperactionSequence { get; set; }
+        public int ProductOperactionNo { get; set; }
         /// <summary>
         /// 機台編號
         /// </summary>
         public int StationId { get; set; }
+       
         public Orders.Order Order { get; set; } 
+        public Stations.Station Station { get; set; }   
+
        
         public MissionStatus Status { get; set; } = MissionStatus.Waiting;
-        public Station CurrentStation { get; set; }
-        public Station NextStation { get; set; }
+
+
+        //public Station CurrentStation { get; set; }
+        //public Station NextStation { get; set; }
         public List<Station> StationRouter { get; set; }
         public List<Station> StationRouterBak { get; set; } = new List<Station>();
-        public List<Station> StationRouterDone { get; set; } = new List<Station>();
-        public List<int> StationProcessTime { get; set; }
+        //public List<Station> StationRouterDone { get; set; } = new List<Station>();
+        //public List<int> StationProcessTime { get; set; }
     }
 }
