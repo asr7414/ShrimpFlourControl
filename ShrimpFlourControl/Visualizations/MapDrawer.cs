@@ -24,7 +24,12 @@ namespace ShrimpFlourControl.Visualizations
         private const int _initialgridsize = 20;
         private const int _initialgridscale = 1;
         private bool _gridState = false;
-        
+        public Node StartNode { get; set;}
+        public Node EndNode  { get; set;}
+        public Node CurveNode1 { get; set; }
+        public Node CurveNode2 { get; set; }
+        public Point CurveCornerPoint { get; set; }
+
         public MapDrawer(SFCServer sfc)
         {
             _sfc = sfc;

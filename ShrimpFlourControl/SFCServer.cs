@@ -35,6 +35,7 @@ namespace ShrimpFlourControl
         public Station SelectedStation { get; set; }
         public AGV SelectedAGV { get; set; }
 
+        public bool SelectState = false;
 
 
         public SFCServer()
