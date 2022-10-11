@@ -14,5 +14,6 @@ namespace ShrimpFlourControl.Orders
         public int Quantity { get; set; }   
         public int Priority { get; set; }
         public DateTime DueDate { get; set; }
+        public Stations.Station LastStation { get; set; }
     }
 }

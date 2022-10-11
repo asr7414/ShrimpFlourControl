@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ShrimpFlourControl.Maps;
-
+using System.Threading;
 namespace ShrimpFlourControl.Stations
 {
     public class FiveAxisCNC : Station
@@ -17,10 +17,29 @@ namespace ShrimpFlourControl.Stations
         {
             return true;
         }
-
-        public void StartMan()
+        /*  Idle = 0,
+            Loading = 1,
+            Processing = 2,
+            Unloading = 3,
+            ProcessingDone = 4
+         */
+        public void LoadWorkPiece()
         {
-            
+            this.Status = StationStatus.Loading;
+            System.Threading.Thread.Sleep(1000);
+        }
+        public void StartProcessing(Missions.Mission mission)
+        {
+            this.Status = StationStatus.Processing;
+            System.Threading.Thread.Sleep(mission.Station.PrcoessingTime);
+            this.Status = StationStatus.ProcessingDone;
+        }
+
+        public void UnloadWorkPiece()
+        {
+            this.Status = StationStatus.Unloading;
+            System.Threading.Thread.Sleep(1000);
+            this.Status = StationStatus.Idle;
         }
     }
 }

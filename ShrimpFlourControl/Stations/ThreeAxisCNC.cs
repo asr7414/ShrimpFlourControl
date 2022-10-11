@@ -18,9 +18,23 @@ namespace ShrimpFlourControl.Stations
             return true;
         }
 
-        public void StartMan()
+        public void LoadWorkPiece()
         {
+            this.Status = StationStatus.Loading;
+            System.Threading.Thread.Sleep(1000);
+        }
+        public void StartProcessing(Missions.Mission mission)
+        {
+            this.Status = StationStatus.Processing;
+            System.Threading.Thread.Sleep(mission.Station.PrcoessingTime);
+            this.Status = StationStatus.ProcessingDone;
+        }
 
+        public void UnloadWorkPiece()
+        {
+            this.Status = StationStatus.Unloading;
+            System.Threading.Thread.Sleep(1000);
+            this.Status = StationStatus.Idle;
         }
     }
 }

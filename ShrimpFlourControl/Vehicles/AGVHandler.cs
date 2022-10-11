@@ -42,7 +42,7 @@ namespace ShrimpFlourControl.Vehicles
             }
         }
 
-        public Thread SendAGVTo(Node destinateNode, AGV selectAGV) // 車輛派遣
+        public Thread SendAGVTo(Node destinateNode, AGV selectAGV, Func<bool> callback) // 車輛派遣
         {
             var routePath = PathPlanner.FindPath(selectAGV.CurrentNode, destinateNode);
             if (routePath != null)
@@ -59,6 +59,7 @@ namespace ShrimpFlourControl.Vehicles
                 {
                     var t = new Thread(() =>
                     {
+                        targetAGV.State = AGVStates.Moving;
                         for (int i = 1; i < routePath.Count; i++)
                         {
                             float speedFactor = 3.0f;
@@ -202,12 +203,13 @@ namespace ShrimpFlourControl.Vehicles
                                     break;
                             }
                         }
+                        targetAGV.State = AGVStates.Idle;
+                        callback();
                     })
                     {
                         IsBackground = true
                     };
                     return t;
-                    
                 }
                 return null;
             }

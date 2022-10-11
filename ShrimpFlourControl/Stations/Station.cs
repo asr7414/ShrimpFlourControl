@@ -37,7 +37,7 @@ namespace ShrimpFlourControl.Stations
         public int OffsetX { get; set; }
         public int OffsetY { get; set; }
         public StationType Type { get; }
-        public StationStatus Status { get; } = StationStatus.Idle;
+        public StationStatus Status { get; set; } = StationStatus.Idle;
         public int PrcoessingTime { get; set; }
         public char Remark { get; set; }
         protected Station(int id, Node refererNode, int offsetX, int offsetY, StationType type, char remark)

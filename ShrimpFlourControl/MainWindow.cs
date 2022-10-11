@@ -64,7 +64,14 @@ namespace ShrimpFlourControl
             var result = this.SFC.ConnectToDatabase();
             if (result)
             {
-                ShowInfo("Connected to database!");       
+                ShowInfo("Connected to database!");
+                SFC.Orders.Add(new Order() { OrderId = 1, ProductId = 1,  Product = SFC.Products.Where(p => p.ProductId == 1).FirstOrDefault() , LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
+                SFC.Orders.Add(new Order() { OrderId = 2, ProductId = 2, Product = SFC.Products.Where(p => p.ProductId == 2).FirstOrDefault(), LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
+                SFC.Orders.Add(new Order() { OrderId = 3, ProductId = 3, Product = SFC.Products.Where(p => p.ProductId == 3).FirstOrDefault(), LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
+
+                gvOrder.DataSource = null;
+                gvOrder.DataSource = SFC.Orders.Select(o => new { o.OrderId, o.Product.ProductId, ProductName = o.Product.Name }).ToList();
+
             }
             else
             {
@@ -479,12 +486,12 @@ namespace ShrimpFlourControl
         private void testRunToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MissionHandler missionHandler = new MissionHandler(this.SFC);
-            
-            List<int> optimalSequence = new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
-            
+
+            List<int> optimalSequence = missionHandler.GenerateOptimalSequence();
             var misssions = missionHandler.GetOptimalSequenceMission(optimalSequence);
             gvMissionList.DataSource = misssions;
-            //missionHandler.RunMissionList(goodSequence);
+           
+            missionHandler.RunMissionList(misssions);
             
         }
         private void InitialListView()
@@ -516,6 +523,7 @@ namespace ShrimpFlourControl
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 frm.order.OrderId = SFC.Orders.Count + 1;
+                frm.order.LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault();
                 SFC.Orders.Add(frm.order);
                 gvOrder.DataSource = null;
                 gvOrder.DataSource = SFC.Orders.Select(o => new { o.OrderId, o.Product.ProductId, ProductName = o.Product.Name }).ToList();

@@ -30,7 +30,7 @@ namespace ShrimpFlourControl.Vehicles
 
         public Node CurrentNode { get; set; } // private protected (為啥)
 
-        public AGVStates State { get; private protected set;  }
+        public AGVStates State { get;set;  }
 
         public abstract bool LoadWorkPiece();
         public abstract bool UnloadWorkPiece();

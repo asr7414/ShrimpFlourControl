@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ShrimpFlourControl.PathPlanner;
 using ShrimpFlourControl.Stations;
 using ShrimpFlourControl.Vehicles;
+using static ShrimpFlourControl.Vehicles.AGV;
 
 namespace ShrimpFlourControl.Missions
 {
@@ -48,6 +50,12 @@ namespace ShrimpFlourControl.Missions
                 };
                 missions.Add(mission);
             });
+            var stations = missions.Select(a => a.Station).Distinct().ToList();
+            stations.ForEach(s =>
+            {
+                s.ReservedMissionList = missions.Where(m => m.StationId == s.StationId).OrderBy(m => m.MissionId).ToList();
+            });
+
             return missions;
             //return GoodSequence.Select(a => GetMissionById(a)).ToList();
             //List<int> goodSequence = new List<int>() { 2,1,3,1,1,2,3,2,3};
@@ -64,7 +72,7 @@ namespace ShrimpFlourControl.Missions
             //SFC.Orders
             return new List<int>() { 2, 1, 3, 1, 1, 2, 3, 2, 3 };
         }
-        public void RunMissionList(List<int> optimalSequence)
+        public void RunMissionListOld(List<int> optimalSequence)
         {
             string finalMsg = "";
             this.MissionListExisted = GetOptimalSequenceMission(optimalSequence);
@@ -103,7 +111,7 @@ namespace ShrimpFlourControl.Missions
                         Console.WriteLine(finalMsg);
                         mission.StationRouterBak.Remove(station);
                         var agv = aGVHandler.FindFitnessAGV(station.ReferNode);
-                        Thread t = aGVHandler.SendAGVTo(station.ReferNode, agv);
+                        Thread t = aGVHandler.SendAGVTo(station.ReferNode, agv, agv.LoadWorkPiece);
                         t.Start();
                         while (t.IsAlive)
                         {
@@ -125,7 +133,39 @@ namespace ShrimpFlourControl.Missions
                 };
             }).Start();
         }
-        public void Do()
+        public void RunMissionList(List<Mission> missions)
+        {
+            var mission = missions.First();
+            //foreach(var mission in missions)
+            {
+                AGVHandler aGVHandler = new AGVHandler(SFC);
+                AStarPlanner PathPlanner = new AStarPlanner(SFC);
+                var agv = (SimulatedAGV)aGVHandler.FindFitnessAGV(mission.Station.ReferNode);
+                //agv station 
+                if (agv != null)
+                {
+                    if (mission.ProductOperactionNo == 1)
+                    {
+                        //去原料倉取料
+                        var t0 = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
+                        t0.Start();
+                    }
+                    //var t = aGVHandler.SendAGVTo(mission.Station.ReferNode, agv, agv.UnloadWorkPiece);
+                    //t.Start();
+                }
+            }
+        }
+        public void LoadWorkPiece(AGV agv)
+        {
+            agv.State = AGVStates.Loading;
+            //mission.Order.LastStation.Status = Station.StationStatus.Unloading;
+            Thread.Sleep(1000);
+        }
+        public void test()
+        {
+
+        }
+        public void RunMission()
         {
 
         }
