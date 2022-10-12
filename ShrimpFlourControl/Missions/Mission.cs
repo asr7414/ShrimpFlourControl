@@ -1,4 +1,5 @@
 ﻿using ShrimpFlourControl.Stations;
+using ShrimpFlourControl.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +38,15 @@ namespace ShrimpFlourControl.Missions
         public int StationId { get; set; }
        
         public Orders.Order Order { get; set; } 
-        public Stations.Station Station { get; set; }   
+        public Stations.Station Station { get; set; }
+        public AGV AssignedAGV { get; private set; }
 
-       
         public MissionStatus Status { get; set; } = MissionStatus.Waiting;
 
-
+        public void AssignAGV(AGV agv)
+        {
+            this.AssignedAGV = agv;
+        }
         //public Station CurrentStation { get; set; }
         //public Station NextStation { get; set; }
         public List<Station> StationRouter { get; set; }

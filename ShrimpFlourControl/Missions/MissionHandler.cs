@@ -140,18 +140,32 @@ namespace ShrimpFlourControl.Missions
             {
                 AGVHandler aGVHandler = new AGVHandler(SFC);
                 AStarPlanner PathPlanner = new AStarPlanner(SFC);
-                var agv = (SimulatedAGV)aGVHandler.FindFitnessAGV(mission.Station.ReferNode);
-                //agv station 
-                if (agv != null)
+                var agv = aGVHandler.FindFitnessAGV(mission.Station.ReferNode);
+                switch(mission.Status)
                 {
-                    if (mission.ProductOperactionNo == 1)
-                    {
-                        //去原料倉取料
-                        var t0 = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
-                        t0.Start();
-                    }
-                    //var t = aGVHandler.SendAGVTo(mission.Station.ReferNode, agv, agv.UnloadWorkPiece);
-                    //t.Start();
+                    case MissionStatus.Waiting:
+                        if (agv != null)
+                        {
+                            mission.AssignAGV(agv);
+                            mission.Status = MissionStatus.Processing;
+                            if (mission.ProductOperactionNo == 1)
+                            {
+                                //去原料倉取料
+                                var t0 = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
+                                t0.Start();
+                            }
+                            //var t = aGVHandler.SendAGVTo(mission.Station.ReferNode, agv, agv.UnloadWorkPiece);
+                            //t.Start();
+                        }
+                        break;
+                    case MissionStatus.Processing:
+                        break;
+                    case MissionStatus.ProcessingDone:
+                        break;
+                    case MissionStatus.Finished:
+                        break;
+                    default:
+                        break;
                 }
             }
         }
