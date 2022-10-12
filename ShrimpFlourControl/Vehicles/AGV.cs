@@ -30,6 +30,8 @@ namespace ShrimpFlourControl.Vehicles
 
         public Node CurrentNode { get; set; } // private protected (為啥)
 
+        public float Runtime { get; set; } //AGV運行時間，用來算稼動率，runtime/程式運行時間
+
         public AGVStates State { get;set;  }
 
         public abstract bool LoadWorkPiece();

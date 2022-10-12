@@ -66,6 +66,13 @@ namespace ShrimpFlourControl
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.draw_gridtoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.groupBox_AGVinfo = new System.Windows.Forms.GroupBox();
+            this.StationInfo_groupBox = new System.Windows.Forms.GroupBox();
+            this.textBox_StationState = new System.Windows.Forms.TextBox();
+            this.textBox_StationNode = new System.Windows.Forms.TextBox();
+            this.textBox_StationID = new System.Windows.Forms.TextBox();
+            this.label_StationState = new System.Windows.Forms.Label();
+            this.label_StationNode = new System.Windows.Forms.Label();
+            this.label_StationId = new System.Windows.Forms.Label();
             this.txtMsg = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gvMissionList = new System.Windows.Forms.DataGridView();
@@ -81,10 +88,13 @@ namespace ShrimpFlourControl
             this.ProductId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddOrder = new System.Windows.Forms.Button();
+            this.textBox_StationType = new System.Windows.Forms.TextBox();
+            this.label_StationType = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_mapViewer)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.groupBox_AGVinfo.SuspendLayout();
+            this.StationInfo_groupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).BeginInit();
             this.groupBox_stationinfo.SuspendLayout();
@@ -142,7 +152,7 @@ namespace ShrimpFlourControl
             this.pictureBox_mapViewer.Location = new System.Drawing.Point(0, 0);
             this.pictureBox_mapViewer.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox_mapViewer.Name = "pictureBox_mapViewer";
-            this.pictureBox_mapViewer.Size = new System.Drawing.Size(1799, 894);
+            this.pictureBox_mapViewer.Size = new System.Drawing.Size(1839, 1066);
             this.pictureBox_mapViewer.TabIndex = 1;
             this.pictureBox_mapViewer.TabStop = false;
             this.pictureBox_mapViewer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_mapViewer_MouseDown);
@@ -155,7 +165,7 @@ namespace ShrimpFlourControl
             this.檔案ToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1799, 28);
+            this.menuStrip.Size = new System.Drawing.Size(1839, 27);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -165,20 +175,20 @@ namespace ShrimpFlourControl
             this.connectToolStripMenuItem3,
             this.testRunToolStripMenuItem});
             this.connectionToolStripMenuItem3.Name = "connectionToolStripMenuItem3";
-            this.connectionToolStripMenuItem3.Size = new System.Drawing.Size(102, 24);
+            this.connectionToolStripMenuItem3.Size = new System.Drawing.Size(102, 23);
             this.connectionToolStripMenuItem3.Text = "Connection";
             // 
             // connectToolStripMenuItem3
             // 
             this.connectToolStripMenuItem3.Name = "connectToolStripMenuItem3";
-            this.connectToolStripMenuItem3.Size = new System.Drawing.Size(224, 26);
+            this.connectToolStripMenuItem3.Size = new System.Drawing.Size(149, 26);
             this.connectToolStripMenuItem3.Text = "Connect";
             this.connectToolStripMenuItem3.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
             // testRunToolStripMenuItem
             // 
             this.testRunToolStripMenuItem.Name = "testRunToolStripMenuItem";
-            this.testRunToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.testRunToolStripMenuItem.Size = new System.Drawing.Size(149, 26);
             this.testRunToolStripMenuItem.Text = "TestRun";
             this.testRunToolStripMenuItem.Click += new System.EventHandler(this.testRunToolStripMenuItem_Click);
             // 
@@ -189,7 +199,7 @@ namespace ShrimpFlourControl
             this.save_to_dbToolStripMenuItem,
             this.clear_dbToolStripMenuItem});
             this.檔案ToolStripMenuItem.Name = "檔案ToolStripMenuItem";
-            this.檔案ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.檔案ToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
             this.檔案ToolStripMenuItem.Text = "檔案";
             // 
             // open_file_from_dbToolStripMenuItem
@@ -231,9 +241,9 @@ namespace ShrimpFlourControl
             this.toolStripSplitButton1,
             this.toolStripSeparator3,
             this.draw_gridtoolStripButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 27);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1799, 35);
+            this.toolStrip1.Size = new System.Drawing.Size(1839, 35);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -401,6 +411,7 @@ namespace ShrimpFlourControl
             // 
             // groupBox_AGVinfo
             // 
+            this.groupBox_AGVinfo.Controls.Add(this.StationInfo_groupBox);
             this.groupBox_AGVinfo.Controls.Add(this.txtMsg);
             this.groupBox_AGVinfo.Controls.Add(this.groupBox1);
             this.groupBox_AGVinfo.Controls.Add(this.AGV_StatetextBox);
@@ -411,19 +422,92 @@ namespace ShrimpFlourControl
             this.groupBox_AGVinfo.Controls.Add(this.label_AGVID);
             this.groupBox_AGVinfo.Controls.Add(this.groupBox_stationinfo);
             this.groupBox_AGVinfo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox_AGVinfo.Location = new System.Drawing.Point(1435, 63);
+            this.groupBox_AGVinfo.Location = new System.Drawing.Point(1475, 62);
             this.groupBox_AGVinfo.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox_AGVinfo.Name = "groupBox_AGVinfo";
             this.groupBox_AGVinfo.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox_AGVinfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox_AGVinfo.Size = new System.Drawing.Size(364, 831);
+            this.groupBox_AGVinfo.Size = new System.Drawing.Size(364, 1004);
             this.groupBox_AGVinfo.TabIndex = 3;
             this.groupBox_AGVinfo.TabStop = false;
             this.groupBox_AGVinfo.Text = "AGV information";
             // 
+            // StationInfo_groupBox
+            // 
+            this.StationInfo_groupBox.Controls.Add(this.textBox_StationType);
+            this.StationInfo_groupBox.Controls.Add(this.label_StationType);
+            this.StationInfo_groupBox.Controls.Add(this.textBox_StationState);
+            this.StationInfo_groupBox.Controls.Add(this.textBox_StationNode);
+            this.StationInfo_groupBox.Controls.Add(this.textBox_StationID);
+            this.StationInfo_groupBox.Controls.Add(this.label_StationState);
+            this.StationInfo_groupBox.Controls.Add(this.label_StationNode);
+            this.StationInfo_groupBox.Controls.Add(this.label_StationId);
+            this.StationInfo_groupBox.Location = new System.Drawing.Point(0, 116);
+            this.StationInfo_groupBox.Name = "StationInfo_groupBox";
+            this.StationInfo_groupBox.Size = new System.Drawing.Size(346, 190);
+            this.StationInfo_groupBox.TabIndex = 2;
+            this.StationInfo_groupBox.TabStop = false;
+            this.StationInfo_groupBox.Text = "Station information";
+            // 
+            // textBox_StationState
+            // 
+            this.textBox_StationState.Location = new System.Drawing.Point(78, 106);
+            this.textBox_StationState.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_StationState.Name = "textBox_StationState";
+            this.textBox_StationState.Size = new System.Drawing.Size(137, 25);
+            this.textBox_StationState.TabIndex = 15;
+            // 
+            // textBox_StationNode
+            // 
+            this.textBox_StationNode.Location = new System.Drawing.Point(78, 73);
+            this.textBox_StationNode.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_StationNode.Name = "textBox_StationNode";
+            this.textBox_StationNode.Size = new System.Drawing.Size(137, 25);
+            this.textBox_StationNode.TabIndex = 14;
+            // 
+            // textBox_StationID
+            // 
+            this.textBox_StationID.Location = new System.Drawing.Point(78, 40);
+            this.textBox_StationID.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_StationID.Name = "textBox_StationID";
+            this.textBox_StationID.Size = new System.Drawing.Size(137, 25);
+            this.textBox_StationID.TabIndex = 13;
+            // 
+            // label_StationState
+            // 
+            this.label_StationState.AutoSize = true;
+            this.label_StationState.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label_StationState.Location = new System.Drawing.Point(25, 109);
+            this.label_StationState.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_StationState.Name = "label_StationState";
+            this.label_StationState.Size = new System.Drawing.Size(35, 15);
+            this.label_StationState.TabIndex = 12;
+            this.label_StationState.Text = "State";
+            // 
+            // label_StationNode
+            // 
+            this.label_StationNode.AutoSize = true;
+            this.label_StationNode.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label_StationNode.Location = new System.Drawing.Point(23, 76);
+            this.label_StationNode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_StationNode.Name = "label_StationNode";
+            this.label_StationNode.Size = new System.Drawing.Size(37, 15);
+            this.label_StationNode.TabIndex = 11;
+            this.label_StationNode.Text = "Node";
+            // 
+            // label_StationId
+            // 
+            this.label_StationId.AutoSize = true;
+            this.label_StationId.Location = new System.Drawing.Point(25, 43);
+            this.label_StationId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_StationId.Name = "label_StationId";
+            this.label_StationId.Size = new System.Drawing.Size(22, 15);
+            this.label_StationId.TabIndex = 10;
+            this.label_StationId.Text = "ID";
+            // 
             // txtMsg
             // 
-            this.txtMsg.Location = new System.Drawing.Point(8, 745);
+            this.txtMsg.Location = new System.Drawing.Point(8, 923);
             this.txtMsg.Margin = new System.Windows.Forms.Padding(4);
             this.txtMsg.Multiline = true;
             this.txtMsg.Name = "txtMsg";
@@ -433,7 +517,7 @@ namespace ShrimpFlourControl
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.gvMissionList);
-            this.groupBox1.Location = new System.Drawing.Point(0, 320);
+            this.groupBox1.Location = new System.Drawing.Point(0, 498);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
@@ -482,7 +566,7 @@ namespace ShrimpFlourControl
             // 
             this.label_AGVstate.AutoSize = true;
             this.label_AGVstate.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label_AGVstate.Location = new System.Drawing.Point(32, 96);
+            this.label_AGVstate.Location = new System.Drawing.Point(30, 87);
             this.label_AGVstate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_AGVstate.Name = "label_AGVstate";
             this.label_AGVstate.Size = new System.Drawing.Size(35, 15);
@@ -493,7 +577,7 @@ namespace ShrimpFlourControl
             // 
             this.label_referNode.AutoSize = true;
             this.label_referNode.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label_referNode.Location = new System.Drawing.Point(32, 64);
+            this.label_referNode.Location = new System.Drawing.Point(27, 54);
             this.label_referNode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_referNode.Name = "label_referNode";
             this.label_referNode.Size = new System.Drawing.Size(37, 15);
@@ -503,7 +587,7 @@ namespace ShrimpFlourControl
             // label_AGVID
             // 
             this.label_AGVID.AutoSize = true;
-            this.label_AGVID.Location = new System.Drawing.Point(32, 34);
+            this.label_AGVID.Location = new System.Drawing.Point(32, 24);
             this.label_AGVID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_AGVID.Name = "label_AGVID";
             this.label_AGVID.Size = new System.Drawing.Size(22, 15);
@@ -514,11 +598,11 @@ namespace ShrimpFlourControl
             // 
             this.groupBox_stationinfo.Controls.Add(this.gvOrder);
             this.groupBox_stationinfo.Controls.Add(this.btnAddOrder);
-            this.groupBox_stationinfo.Location = new System.Drawing.Point(0, 134);
+            this.groupBox_stationinfo.Location = new System.Drawing.Point(0, 312);
             this.groupBox_stationinfo.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox_stationinfo.Name = "groupBox_stationinfo";
             this.groupBox_stationinfo.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox_stationinfo.Size = new System.Drawing.Size(356, 178);
+            this.groupBox_stationinfo.Size = new System.Drawing.Size(360, 178);
             this.groupBox_stationinfo.TabIndex = 4;
             this.groupBox_stationinfo.TabStop = false;
             this.groupBox_stationinfo.Text = "Order information";
@@ -572,11 +656,30 @@ namespace ShrimpFlourControl
             this.btnAddOrder.UseVisualStyleBackColor = true;
             this.btnAddOrder.Click += new System.EventHandler(this.btnAddOrder_Click);
             // 
+            // textBox_StationType
+            // 
+            this.textBox_StationType.Location = new System.Drawing.Point(78, 141);
+            this.textBox_StationType.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_StationType.Name = "textBox_StationType";
+            this.textBox_StationType.Size = new System.Drawing.Size(137, 25);
+            this.textBox_StationType.TabIndex = 17;
+            // 
+            // label_StationType
+            // 
+            this.label_StationType.AutoSize = true;
+            this.label_StationType.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label_StationType.Location = new System.Drawing.Point(25, 144);
+            this.label_StationType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_StationType.Name = "label_StationType";
+            this.label_StationType.Size = new System.Drawing.Size(36, 15);
+            this.label_StationType.TabIndex = 16;
+            this.label_StationType.Text = "Type";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1799, 894);
+            this.ClientSize = new System.Drawing.Size(1839, 1066);
             this.Controls.Add(this.groupBox_AGVinfo);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip);
@@ -593,6 +696,8 @@ namespace ShrimpFlourControl
             this.toolStrip1.PerformLayout();
             this.groupBox_AGVinfo.ResumeLayout(false);
             this.groupBox_AGVinfo.PerformLayout();
+            this.StationInfo_groupBox.ResumeLayout(false);
+            this.StationInfo_groupBox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gvMissionList)).EndInit();
             this.groupBox_stationinfo.ResumeLayout(false);
@@ -654,6 +759,15 @@ namespace ShrimpFlourControl
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductName;
         private System.Windows.Forms.DataGridView gvMissionList;
+        private System.Windows.Forms.GroupBox StationInfo_groupBox;
+        private System.Windows.Forms.TextBox textBox_StationState;
+        private System.Windows.Forms.TextBox textBox_StationNode;
+        private System.Windows.Forms.TextBox textBox_StationID;
+        private System.Windows.Forms.Label label_StationState;
+        private System.Windows.Forms.Label label_StationNode;
+        private System.Windows.Forms.Label label_StationId;
+        private System.Windows.Forms.TextBox textBox_StationType;
+        private System.Windows.Forms.Label label_StationType;
     }
 }
 

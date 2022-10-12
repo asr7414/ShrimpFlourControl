@@ -18,9 +18,11 @@ namespace ShrimpFlourControl.Missions
         public List<Mission> MissionList = new List<Mission>();
         public List<Mission> MissionListExisted = new List<Mission>();
         public DataGridView dataGridView;
+        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
         public MissionHandler(SFCServer SFC)
         {
             this.SFC = SFC;
+            Task.Run(HandleMissions);
             
         }
 
@@ -154,6 +156,10 @@ namespace ShrimpFlourControl.Missions
                     //t.Start();
                 }
             }
+        }
+        private void HandleMissions()
+        { 
+            
         }
         public void LoadWorkPiece(AGV agv)
         {

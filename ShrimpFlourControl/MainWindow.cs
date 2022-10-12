@@ -200,7 +200,33 @@ namespace ShrimpFlourControl
                         SFC.SelectedStation = _mapDrawer.GetStation(e.Location);
                         SFC.SelectedAGV = _mapDrawer.GetAGV(e.Location);
                         SFC.SelectedNode = _mapDrawer.GetNode(e.Location);
-                        SFC.SelectState = true;
+                        if (SFC.SelectedStation != null)
+                        {
+                            textBox_StationID.Text = SFC.SelectedStation.StationId.ToString();
+                            textBox_StationNode.Text = SFC.SelectedStation.ReferNode.ToString();
+                            textBox_StationState.Text = SFC.SelectedStation.Status.ToString();
+                            textBox_StationType.Text = SFC.SelectedStation.Type.ToString();
+                        }
+                        else 
+                        {
+                            textBox_StationID.Clear();
+                            textBox_StationNode.Clear();
+                            textBox_StationState.Clear();
+                            textBox_StationType.Clear();
+                        }
+                        if (SFC.SelectedAGV != null)
+                        {
+                            AGV_IDtextBox.Text = SFC.SelectedAGV.AgvId.ToString();
+                            AGV_NodetextBox.Text = SFC.SelectedAGV.CurrentNode.ToString();
+                            AGV_StatetextBox.Text = SFC.SelectedAGV.State.ToString();
+                        }
+                        else
+                        {
+                            AGV_IDtextBox.Clear();
+                            AGV_NodetextBox.Clear();
+                            AGV_StatetextBox.Clear();
+                        }
+                            SFC.SelectState = true;
 
                         break;
 
@@ -511,6 +537,7 @@ namespace ShrimpFlourControl
             //    listView_missionList.Items.Add(item);
             //}
         }
+
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
