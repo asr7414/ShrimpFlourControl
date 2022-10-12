@@ -36,9 +36,9 @@ namespace ShrimpFlourControl.Vehicles
             Disconnected = 0x80,    //1000 0000
             Error = 0x81,           //1000 0001
          */
-        public void Move(List<Node> route, List<Path> sfcPaths)
+        public override void Move(List<Node> route, List<Path> sfcPaths)
         {
-            SendAGVTo(route, sfcPaths);
+            //SendAGVTo(route, sfcPaths);
             if (this.State != AGVStates.Idle && route.First() == this.CurrentNode)
             {                
                 _route = route;
@@ -222,7 +222,7 @@ namespace ShrimpFlourControl.Vehicles
         {
             this.State = AGVStates.Loading;
             Debug.WriteLine("Loading");
-            Thread.Sleep(1000);
+            Thread.Sleep(10);
             return true;
         }
         public override bool UnloadWorkPiece()
@@ -232,7 +232,7 @@ namespace ShrimpFlourControl.Vehicles
             //}
             this.State = AGVStates.Unloading;
             Debug.WriteLine("Unloading");
-            Thread.Sleep(1000);
+            Thread.Sleep(10);
             return true;
         }
         public void AGVSimulation()

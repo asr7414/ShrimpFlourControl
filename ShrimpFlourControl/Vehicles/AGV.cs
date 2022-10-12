@@ -24,6 +24,7 @@ namespace ShrimpFlourControl.Vehicles
         }
         #endregion
 
+        public abstract void Move(List<Node> route, List<Path> sfcPaths);
         public int AgvId { get; private protected set; }
         public float X { get; set; } // private protected (為啥)
         public float Y { get; set; } // private protected (為啥)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -45,8 +46,10 @@ namespace ShrimpFlourControl.Missions
                     OrderId = orderId,
                     Order = order,
                     ProductOperactionNo = ProductOperactionListIndex + 1,
+                    ProductOperaction = order.Product.ProductOperactionList[ProductOperactionListIndex],
                     StationId = stationId,
-                    Station = station
+                    Station = station,
+                    PreviousMission = missions.Where(m => m.OrderId == orderId).FirstOrDefault(),
                 };
                 missions.Add(mission);
             });
@@ -135,30 +138,42 @@ namespace ShrimpFlourControl.Missions
         }
         public void RunMissionList(List<Mission> missions)
         {
+            AGVHandler aGVHandler = new AGVHandler(SFC);
+            AStarPlanner PathPlanner = new AStarPlanner(SFC);
             var mission = missions.First();
-            //foreach(var mission in missions)
+            //foreach (var mission in missions)
             {
-                AGVHandler aGVHandler = new AGVHandler(SFC);
-                AStarPlanner PathPlanner = new AStarPlanner(SFC);
+               
                 var agv = aGVHandler.FindFitnessAGV(mission.Station.ReferNode);
+                Debug.WriteLine(mission.MissionId + "," + agv.AgvId);
                 switch(mission.Status)
                 {
                     case MissionStatus.Waiting:
-                        if (agv != null)
+                        if (mission.ProductOperactionNo == 1)//第一個工序, 必須要額外多做一個動作, 先去原料倉取料
                         {
-                            mission.AssignAGV(agv);
-                            mission.Status = MissionStatus.Processing;
-                            if (mission.ProductOperactionNo == 1)
+                            if (agv != null)
                             {
-                                //去原料倉取料
-                                var t0 = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
-                                t0.Start();
+                                mission.Status = MissionStatus.Processing;
+                                agv.State = AGVStates.Moving;//agv狀態有問題, 待處理
+                                mission.AssignAGV(agv);
+                                var t = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
+                                t.Start();
                             }
-                            //var t = aGVHandler.SendAGVTo(mission.Station.ReferNode, agv, agv.UnloadWorkPiece);
-                            //t.Start();
+                        }
+                        else if (mission.PreviousMission.Status == MissionStatus.Finished)
+                        {
+                            if (agv != null)
+                            {
+                                mission.Status = MissionStatus.Processing;
+                                mission.AssignAGV(agv);
+                                var t = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
+                                t.Start();
+                            }
                         }
                         break;
                     case MissionStatus.Processing:
+                        Thread.Sleep(mission.ProductOperaction.OperactionTime);
+                        mission.Status = MissionStatus.ProcessingDone;
                         break;
                     case MissionStatus.ProcessingDone:
                         break;

@@ -60,6 +60,7 @@ namespace ShrimpFlourControl.Vehicles
                     var t = new Thread(() =>
                     {
                         targetAGV.State = AGVStates.Moving;
+                        Debug.WriteLine(targetAGV.AgvId + " Moving");
                         for (int i = 1; i < routePath.Count; i++)
                         {
                             float speedFactor = 3.0f;
@@ -204,6 +205,7 @@ namespace ShrimpFlourControl.Vehicles
                             }
                         }
                         targetAGV.State = AGVStates.Idle;
+                        Debug.WriteLine(targetAGV.AgvId + " Idle");
                         callback();
                     })
                     {
