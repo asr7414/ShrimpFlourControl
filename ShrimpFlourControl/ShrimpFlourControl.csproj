@@ -124,6 +124,12 @@
     <Compile Include="Stations\StorageStation.cs" />
     <Compile Include="Stations\ThreeAxisCNC.cs" />
     <Compile Include="Stations\WIP.cs" />
+    <Compile Include="Tasks\AGVMoveTask.cs" />
+    <Compile Include="Tasks\AGVTask.cs" />
+    <Compile Include="Tasks\AGVTaskHandler.cs" />
+    <Compile Include="Tasks\StationProcessTask.cs" />
+    <Compile Include="Tasks\StationTask.cs" />
+    <Compile Include="Tasks\StationTaskHandler.cs" />
     <Compile Include="Vehicles\AGV.cs" />
     <Compile Include="Vehicles\AGVHandler.cs" />
     <Compile Include="Vehicles\RealAGV.cs" />

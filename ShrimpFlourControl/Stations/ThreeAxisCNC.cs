@@ -23,11 +23,12 @@ namespace ShrimpFlourControl.Stations
             this.Status = StationStatus.Loading;
             System.Threading.Thread.Sleep(1000);
         }
-        public void StartProcessing(Missions.Mission mission)
+        public override bool StartProcessing(Missions.Mission mission)
         {
             this.Status = StationStatus.Processing;
-            System.Threading.Thread.Sleep(mission.Station.PrcoessingTime);
+            System.Threading.Thread.Sleep(mission.ProductOperaction.OperactionTime * 1000);
             this.Status = StationStatus.ProcessingDone;
+            return true;
         }
 
         public void UnloadWorkPiece()
