@@ -149,7 +149,7 @@ namespace ShrimpFlourControl.Missions
             var aGVHandler = new AGVHandler(SFC);
             foreach (var mission in missions)
             {
-                var agv = aGVHandler.FindFitnessAGV(mission.Station.ReferNode);
+                var agv = aGVHandler.FindFitnessAGV(mission.Order.LastStation.ReferNode);
                 switch (mission.Status)
                 {
                     case MissionStatus.Waiting:
@@ -173,11 +173,11 @@ namespace ShrimpFlourControl.Missions
                                 aGVHandler.SendAGVTo2(mission.Station.ReferNode, agv);
                                 agv.UnloadWorkPiece();
                                 mission.Order.LastStation = mission.Station;
-                                //new Thread(() =>
-                                //{
+                                new Thread((start) =>
+                                {
                                     aGVHandler.SendAGVTo2(agv.HomeNode, agv);
                                     agv.IsOccupied = false;
-                                //});
+                                });
                                 mission.Station.StartProcessing(mission);
                                 mission.Status = MissionStatus.ProcessingDone;
                             }).Start();

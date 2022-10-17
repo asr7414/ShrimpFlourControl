@@ -39,6 +39,7 @@ namespace ShrimpFlourControl.Vehicles
 
         public abstract bool LoadWorkPiece();
         public abstract bool UnloadWorkPiece();
+        //public abstract void Move(Node destinateNode, AGV selectAGV);
 
         public bool Equals(AGV other)
         {
