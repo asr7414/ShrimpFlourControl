@@ -24,16 +24,18 @@ namespace ShrimpFlourControl.Vehicles
         }
         #endregion
 
-        public abstract void Move(List<Node> route, List<Path> sfcPaths);
+        public abstract void Move(List<Node> route);
         public int AgvId { get; private protected set; }
+        public AGVStates State { get; set; }
         public float X { get; set; } // private protected (為啥)
         public float Y { get; set; } // private protected (為啥)
 
         public Node CurrentNode { get; set; } // private protected (為啥)
+        public Node HomeNode { get; set; }
 
         public float Runtime { get; set; } //AGV運行時間，用來算稼動率，runtime/程式運行時間
 
-        public AGVStates State { get;set;  }
+        public bool IsOccupied { get; set; }
 
         public abstract bool LoadWorkPiece();
         public abstract bool UnloadWorkPiece();

@@ -19,10 +19,12 @@ namespace ShrimpFlourControl.Missions
         public List<Mission> MissionList = new List<Mission>();
         public List<Mission> MissionListExisted = new List<Mission>();
         public DataGridView dataGridView;
+        
         private readonly CancellationTokenSource _cts = new CancellationTokenSource();
         public MissionHandler(SFCServer SFC)
         {
             this.SFC = SFC;
+            
             Task.Run(HandleMissions);
             
         }
@@ -39,6 +41,7 @@ namespace ShrimpFlourControl.Missions
             optimalSequence.ForEach(orderId =>
             {
                 var order = SFC.Orders.Where(o => o.OrderId == orderId).First();
+                order.LastStation = SFC.Stations.Where(a => a.StationId == 0).FirstOrDefault();
                 var ProductOperactionListIndex = missions.Where(a => a.OrderId == orderId).Count();
                 var stationId = order.Product.ProductOperactionList[ProductOperactionListIndex].StationId;
                 var station = SFC.Stations.Where(a => a.StationId == stationId).FirstOrDefault();
@@ -47,8 +50,10 @@ namespace ShrimpFlourControl.Missions
                     MissionId = idx++,
                     OrderId = orderId,
                     Order = order,
+                    //Status = ProductOperactionListIndex == 0 ? MissionStatus.LoadingWorkPiece : MissionStatus.Waiting,
                     ProductOperactionNo = ProductOperactionListIndex + 1,
                     ProductOperaction = order.Product.ProductOperactionList[ProductOperactionListIndex],
+                    
                     StationId = stationId,
                     Station = station,
                     PreviousMission = missions.Where(m => m.OrderId == orderId).FirstOrDefault(),
@@ -138,58 +143,85 @@ namespace ShrimpFlourControl.Missions
                 };
             }).Start();
         }
+        int cnt = 1;
         public void RunMissionList(List<Mission> missions)
         {
-            AGVHandler aGVHandler = new AGVHandler(SFC);
-            AStarPlanner PathPlanner = new AStarPlanner(SFC);
-            var mission = missions.First();
-            //foreach (var mission in missions)
+            var aGVHandler = new AGVHandler(SFC);
+            foreach (var mission in missions)
             {
-               
                 var agv = aGVHandler.FindFitnessAGV(mission.Station.ReferNode);
-                Debug.WriteLine(mission.MissionId + "," + agv.AgvId);
-                switch(mission.Status)
+                switch (mission.Status)
                 {
                     case MissionStatus.Waiting:
-                        if (mission.ProductOperactionNo == 1)//第一個工序, 必須要額外多做一個動作, 先去原料倉取料
+                        if (mission.PreviousMission != null && mission.PreviousMission.Status != MissionStatus.Finished)
                         {
-                            if (agv != null)
-                            {
-                                mission.Status = MissionStatus.Processing;
-                                agv.State = AGVStates.Moving;//agv狀態有問題, 待處理
-                                mission.AssignAGV(agv);
-                                var t = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
-                                t.Start();
-                            }
+                            continue;
                         }
-                        else if (mission.PreviousMission.Status == MissionStatus.Finished)
+                        if (agv != null)
                         {
-                            if (agv != null)
+                            new Thread(() =>
                             {
+                                agv.IsOccupied = true;
                                 mission.Status = MissionStatus.Processing;
                                 mission.AssignAGV(agv);
-                                var t = aGVHandler.SendAGVTo(mission.Order.LastStation.ReferNode, agv, agv.LoadWorkPiece);
-                                t.Start();
-                            }
+                                //if(mission.Station.StationId != mission.Order.LastStation.StationId)
+                                //{
+                                aGVHandler.SendAGVTo2(mission.Order.LastStation.ReferNode, agv);
+                                agv.LoadWorkPiece();
+                                //}
+
+                                aGVHandler.SendAGVTo2(mission.Station.ReferNode, agv);
+                                agv.UnloadWorkPiece();
+                                mission.Order.LastStation = mission.Station;
+                                //new Thread(() =>
+                                //{
+                                    aGVHandler.SendAGVTo2(agv.HomeNode, agv);
+                                    agv.IsOccupied = false;
+                                //});
+                                mission.Station.StartProcessing(mission);
+                                mission.Status = MissionStatus.ProcessingDone;
+                            }).Start();
                         }
-                        break;
-                    case MissionStatus.Processing:
-                        Thread.Sleep(mission.ProductOperaction.OperactionTime);
-                        mission.Status = MissionStatus.ProcessingDone;
                         break;
                     case MissionStatus.ProcessingDone:
+                        var nextStation = missions.Where(a => a.OrderId == mission.OrderId && a.ProductOperactionNo == mission.ProductOperactionNo + 1).FirstOrDefault()?.Station;
+                        if (agv != null)
+                        {
+                            if (nextStation == null)
+                            {
+                                new Thread(() =>
+                                {
+                                    agv.IsOccupied = true;
+                                    mission.AssignAGV(agv);
+                                    aGVHandler.SendAGVTo2(SFC.WipStation.ReferNode, agv);
+                                    agv.UnloadWorkPiece();
+                                    aGVHandler.SendAGVTo2(agv.HomeNode, agv);
+                                    agv.IsOccupied = false;
+                                    mission.Status = MissionStatus.Finished;
+                                    mission.Order.LastStation = SFC.WipStation;
+                                });
+                            }
+                        }
                         break;
                     case MissionStatus.Finished:
                         break;
                     default:
                         break;
                 }
+                Thread.Sleep(10);
+            }
+            //if (cnt <=250)
+            {
+                cnt++;
+                RunMissionList(missions.Where(m => m.Status != MissionStatus.Finished).ToList());
             }
         }
         private void HandleMissions()
         { 
             
         }
+        
+
         public void LoadWorkPiece(AGV agv)
         {
             agv.State = AGVStates.Loading;

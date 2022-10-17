@@ -17,6 +17,7 @@ namespace ShrimpFlourControl.Missions
         Unloading = 2,
         ProcessingDone = 3,
         Finished = 4,
+        LoadingWorkPiece=5
        
     }
     #endregion
@@ -38,10 +39,7 @@ namespace ShrimpFlourControl.Missions
         /// 機台編號
         /// </summary>
         public int StationId { get; set; }
-        /// <summary>
-        /// 這個mission在station上作業的時間
-        /// </summary>
-        public int StationOperactionTime { get; set; }
+
         public ProductOperaction ProductOperaction { get; set; }    
 
         public Orders.Order Order { get; set; } 

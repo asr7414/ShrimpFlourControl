@@ -24,6 +24,9 @@ namespace ShrimpFlourControl
         public List<Path> Paths { get; private set; }
         public List<AGV> AGVs { get; private set; }
         public List<Station> Stations { get; private set; }
+        public Station MaterialStation { get { return Stations.Where(s => s.StationId == 0).FirstOrDefault(); } }
+        public Station FinishedStation { get { return Stations.Where(s => s.StationId == 6).FirstOrDefault(); } }
+        public Station WipStation { get { return Stations.Where(s => s.StationId == 4).FirstOrDefault(); } }
         public List<Mission> Missions { get; set; }
         public List<Order> Orders { get; set; } = new List<Order>();
         public List<Product> Products { get; set; }

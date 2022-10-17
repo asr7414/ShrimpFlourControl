@@ -65,13 +65,18 @@ namespace ShrimpFlourControl
             if (result)
             {
                 ShowInfo("Connected to database!");
+                foreach(var agv in SFC.AGVs)
+                {
+                    agv.HomeNode = agv.CurrentNode;
+                }
                 SFC.Orders.Add(new Order() { OrderId = 1, ProductId = 1,  Product = SFC.Products.Where(p => p.ProductId == 1).FirstOrDefault() , LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
                 SFC.Orders.Add(new Order() { OrderId = 2, ProductId = 2, Product = SFC.Products.Where(p => p.ProductId == 2).FirstOrDefault(), LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
                 SFC.Orders.Add(new Order() { OrderId = 3, ProductId = 3, Product = SFC.Products.Where(p => p.ProductId == 3).FirstOrDefault(), LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
 
                 gvOrder.DataSource = null;
                 gvOrder.DataSource = SFC.Orders.Select(o => new { o.OrderId, o.Product.ProductId, ProductName = o.Product.Name }).ToList();
-
+                gvAgvList.DataSource = null;
+                gvAgvList.DataSource = SFC.AGVs;
             }
             else
             {
@@ -514,11 +519,13 @@ namespace ShrimpFlourControl
             MissionHandler missionHandler = new MissionHandler(this.SFC);
 
             List<int> optimalSequence = missionHandler.GenerateOptimalSequence();
-            var misssions = missionHandler.GetOptimalSequenceMission(optimalSequence);
+            var misssions = missionHandler.GetOptimalSequenceMission(optimalSequence);//.Where(a => a.StationId <= 2).ToList();
             gvMissionList.DataSource = misssions;
-           
-            missionHandler.RunMissionList(misssions);
-            
+            new Thread(() =>
+            {
+                missionHandler.RunMissionList(misssions);
+            }).Start();
+
         }
         private void InitialListView()
         {

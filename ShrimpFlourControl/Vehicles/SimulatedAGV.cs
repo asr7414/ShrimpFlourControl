@@ -25,7 +25,7 @@ namespace ShrimpFlourControl.Vehicles
             this.State = AGVStates.Idle;
             _route = new List<Node>();
             _cts = new CancellationTokenSource();
-            Task.Run(AGVSimulation);
+            //Task.Run(AGVSimulation);
         }
         /*  Idle = 0x00,
             Moving = 0x01,
@@ -36,7 +36,7 @@ namespace ShrimpFlourControl.Vehicles
             Disconnected = 0x80,    //1000 0000
             Error = 0x81,           //1000 0001
          */
-        public override void Move(List<Node> route, List<Path> sfcPaths)
+        public override void Move(List<Node> route)
         {
             //SendAGVTo(route, sfcPaths);
             if (this.State != AGVStates.Idle && route.First() == this.CurrentNode)
@@ -221,8 +221,9 @@ namespace ShrimpFlourControl.Vehicles
         public override bool LoadWorkPiece()
         {
             this.State = AGVStates.Loading;
-            Debug.WriteLine("Loading");
+            //Debug.WriteLine("Loading");
             Thread.Sleep(10);
+            this.State = AGVStates.Idle;
             return true;
         }
         public override bool UnloadWorkPiece()
@@ -231,8 +232,9 @@ namespace ShrimpFlourControl.Vehicles
             //{
             //}
             this.State = AGVStates.Unloading;
-            Debug.WriteLine("Unloading");
+            //Debug.WriteLine("Unloading");
             Thread.Sleep(10);
+            this.State = AGVStates.Idle;
             return true;
         }
         public void AGVSimulation()
