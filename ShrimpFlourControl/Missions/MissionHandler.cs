@@ -173,22 +173,24 @@ namespace ShrimpFlourControl.Missions
                                 aGVHandler.SendAGVTo2(mission.Station.ReferNode, agv);
                                 agv.UnloadWorkPiece();
                                 mission.Order.LastStation = mission.Station;
-                                new Thread((start) =>
+                                new Thread(() =>
                                 {
                                     aGVHandler.SendAGVTo2(agv.HomeNode, agv);
                                     agv.IsOccupied = false;
+                                    Debug.WriteLine("target AGV occupied? " + agv.IsOccupied);
                                 }).Start();
                                 mission.Station.StartProcessing(mission);
                                 mission.Status = MissionStatus.ProcessingDone;
                             }).Start();
                         }
+                        //else Debug.WriteLine("Cant find a car missionstate wait");
                         break;
                     case MissionStatus.ProcessingDone:
-                        var nextStation = missions.Where(a => a.OrderId == mission.OrderId && a.ProductOperactionNo == mission.ProductOperactionNo + 1).FirstOrDefault()?.Station;
+                        //var nextStation = missions.Where(a => a.OrderId == mission.OrderId && a.ProductOperactionNo == mission.ProductOperactionNo + 1).FirstOrDefault()?.Station;
                         if (agv != null)
                         {
-                            if (nextStation == null)
-                            {
+                            //if (nextStation == null)
+                            //{
                                 new Thread(() =>
                                 {
                                     agv.IsOccupied = true;
@@ -200,8 +202,9 @@ namespace ShrimpFlourControl.Missions
                                     mission.Status = MissionStatus.Finished;
                                     mission.Order.LastStation = SFC.WipStation;
                                 }).Start();
-                            }
+                            //}
                         }
+                        else Debug.WriteLine("cant find a car");
                         break;
                     case MissionStatus.Finished:
                         break;
@@ -213,6 +216,8 @@ namespace ShrimpFlourControl.Missions
             //if (cnt <=250)
             {
                 cnt++;
+                Debug.WriteLine("count = " + cnt);
+                Debug.WriteLine("mission len = " + missions.Count);
                 RunMissionList(missions.Where(m => m.Status != MissionStatus.Finished).ToList());
             }
         }

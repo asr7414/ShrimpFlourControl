@@ -266,7 +266,7 @@ namespace ShrimpFlourControl.PathPlanner
                 return currentNode.F;
             }
 
-            Debug.WriteLine($"Path Found! Took {stopwatch.ElapsedMilliseconds}ms");
+            //Debug.WriteLine($"Path Found! Took {stopwatch.ElapsedMilliseconds}ms");
             return currentNode.F;
         }
 

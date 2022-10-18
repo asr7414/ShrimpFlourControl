@@ -33,7 +33,7 @@ namespace ShrimpFlourControl.Vehicles
 
             }else if (result.Count() >= 2)
             {
-                return result.Select(a => new { agv = a, distinct = PathPlanner.Distance(a.CurrentNode, machineNode) }).OrderBy(a => a.distinct).First().agv;
+                return result.Select(a => new { agv = a, distance = PathPlanner.Distance(a.CurrentNode, machineNode) }).OrderBy(a => a.distance).FirstOrDefault().agv;
             }
             else
             {
@@ -389,6 +389,7 @@ namespace ShrimpFlourControl.Vehicles
                             }
                         }
                         targetAGV.State = AGVStates.Idle;
+                    Debug.WriteLine("target AGV state = " + targetAGV.State);
                 }
             }
         }
