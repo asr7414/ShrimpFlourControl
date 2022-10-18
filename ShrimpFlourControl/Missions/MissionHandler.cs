@@ -177,7 +177,7 @@ namespace ShrimpFlourControl.Missions
                                 {
                                     aGVHandler.SendAGVTo2(agv.HomeNode, agv);
                                     agv.IsOccupied = false;
-                                });
+                                }).Start();
                                 mission.Station.StartProcessing(mission);
                                 mission.Status = MissionStatus.ProcessingDone;
                             }).Start();
@@ -199,7 +199,7 @@ namespace ShrimpFlourControl.Missions
                                     agv.IsOccupied = false;
                                     mission.Status = MissionStatus.Finished;
                                     mission.Order.LastStation = SFC.WipStation;
-                                });
+                                }).Start();
                             }
                         }
                         break;
