@@ -68,7 +68,9 @@ namespace ShrimpFlourControl
                 foreach(var agv in SFC.AGVs)
                 {
                     agv.HomeNode = agv.CurrentNode;
+                    agv.textBox = txtMsg;
                 }
+                this.SFC.AGVs = this.SFC.AGVs.Where(a => a.AgvId == 0).ToList();
                 SFC.Orders.Add(new Order() { OrderId = 1, ProductId = 1,  Product = SFC.Products.Where(p => p.ProductId == 1).FirstOrDefault() , LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
                 SFC.Orders.Add(new Order() { OrderId = 2, ProductId = 2, Product = SFC.Products.Where(p => p.ProductId == 2).FirstOrDefault(), LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });
                 SFC.Orders.Add(new Order() { OrderId = 3, ProductId = 3, Product = SFC.Products.Where(p => p.ProductId == 3).FirstOrDefault(), LastStation = SFC.Stations.Where(s => s.StationId == 0).FirstOrDefault() });

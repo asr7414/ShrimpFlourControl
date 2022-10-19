@@ -16,6 +16,7 @@ namespace ShrimpFlourControl.Vehicles
 {
     public class AGVHandler
     {
+        public static readonly object _agvLock = new object();
         public SFCServer SFC;
         public AStarPlanner PathPlanner;
         public AGVHandler(SFCServer SFC)
@@ -26,18 +27,22 @@ namespace ShrimpFlourControl.Vehicles
         public AGV FindFitnessAGV(Node machineNode)   //  派車邏輯(車輛選擇)
         {
             AStarPlanner _pathPlanner = new AStarPlanner(SFC);
-            var result = this.SFC.AGVs.Where(a => a.State == AGVStates.Idle && a.IsOccupied == false);
-            if (result.Count() == 1)
+            //lock (_agvLock)
             {
-                return result.First();
+                var result = this.SFC.AGVs.Where(a => a.State == AGVStates.Idle && a.IsOccupied == false);
+                if (result.Count() == 1)
+                {
+                    return result.First();
 
-            }else if (result.Count() >= 2)
-            {
-                return result.Select(a => new { agv = a, distance = PathPlanner.Distance(a.CurrentNode, machineNode) }).OrderBy(a => a.distance).FirstOrDefault().agv;
-            }
-            else
-            {
-                return null;
+                }
+                else if (result.Count() >= 2)
+                {
+                    return result.Select(a => new { agv = a, distance = PathPlanner.Distance(a.CurrentNode, machineNode) }).OrderBy(a => a.distance).FirstOrDefault().agv;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

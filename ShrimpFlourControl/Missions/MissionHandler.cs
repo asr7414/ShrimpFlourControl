@@ -147,6 +147,10 @@ namespace ShrimpFlourControl.Missions
         public void RunMissionList(List<Mission> missions)
         {
             var aGVHandler = new AGVHandler(SFC);
+            if(cnt > 900)
+            {
+                var s = 1;
+            }
             foreach (var mission in missions)
             {
                 var agv = aGVHandler.FindFitnessAGV(mission.Order.LastStation.ReferNode);
@@ -157,29 +161,36 @@ namespace ShrimpFlourControl.Missions
                         {
                             continue;
                         }
-                        if (agv != null)
+
+                        if (agv != null
+                            && mission.Station.Status == Station.StationStatus.Idle
+                            && (mission.MissionId == mission.Station.ReservedMissionList.FirstOrDefault()?.MissionId || mission.Order.LastStation.StationId == 0)
+                            )
                         {
                             new Thread(() =>
                             {
                                 agv.IsOccupied = true;
+                               
                                 mission.Status = MissionStatus.Processing;
                                 mission.AssignAGV(agv);
-                                //if(mission.Station.StationId != mission.Order.LastStation.StationId)
-                                //{
+                                agv.AddMessage("wait, missionId" + mission.MissionId + ", from node" + agv.CurrentNode.ID + " to station" + mission.Order.LastStation.StationId);
                                 aGVHandler.SendAGVTo2(mission.Order.LastStation.ReferNode, agv);
+                               
                                 agv.LoadWorkPiece();
-                                //}
 
+                                agv.AddMessage("wait, missionId" + mission.MissionId + ", from station" + mission.Order.LastStation.StationId + " to station" + mission.Station.StationId);
                                 aGVHandler.SendAGVTo2(mission.Station.ReferNode, agv);
                                 agv.UnloadWorkPiece();
                                 mission.Order.LastStation = mission.Station;
                                 new Thread(() =>
                                 {
+                                    agv.AddMessage("wait, missionId" + mission.MissionId + ", from station" + mission.Order.LastStation.StationId + " to home" );
                                     aGVHandler.SendAGVTo2(agv.HomeNode, agv);
                                     agv.IsOccupied = false;
-                                    Debug.WriteLine("target AGV occupied? " + agv.IsOccupied);
+                                    //Debug.WriteLine("target AGV occupied? " + agv.IsOccupied);
                                 }).Start();
                                 mission.Station.StartProcessing(mission);
+                                
                                 mission.Status = MissionStatus.ProcessingDone;
                             }).Start();
                         }
@@ -195,12 +206,23 @@ namespace ShrimpFlourControl.Missions
                                 {
                                     agv.IsOccupied = true;
                                     mission.AssignAGV(agv);
+
+                                    agv.AddMessage("prsDone missionId" + mission.MissionId + ", from node" + agv.CurrentNode.ID + " to station" + mission.Station.StationId);
+                                    aGVHandler.SendAGVTo2(mission.Station.ReferNode, agv);
+                                    agv.LoadWorkPiece();
+
+                                    agv.AddMessage("prsDone missionId" + mission.MissionId + ", from station" + mission.Station.StationId + " to station" + SFC.WipStation.StationId);
                                     aGVHandler.SendAGVTo2(SFC.WipStation.ReferNode, agv);
                                     agv.UnloadWorkPiece();
+
+                                    mission.Order.LastStation = SFC.WipStation;
+                                    mission.Station.Status = Station.StationStatus.Idle;
+                                    mission.Status = MissionStatus.Finished;
+                                    agv.AddMessage("prsDone missionId" + mission.MissionId + ", from station" + SFC.WipStation.StationId + " to Home" );
                                     aGVHandler.SendAGVTo2(agv.HomeNode, agv);
                                     agv.IsOccupied = false;
-                                    mission.Status = MissionStatus.Finished;
-                                    mission.Order.LastStation = SFC.WipStation;
+                                    
+                                    
                                 }).Start();
                             //}
                         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ShrimpFlourControl.Maps;
 
 namespace ShrimpFlourControl.Vehicles
@@ -23,7 +24,7 @@ namespace ShrimpFlourControl.Vehicles
             Error = 0x81,           //1000 0001
         }
         #endregion
-
+        
         public abstract void Move(List<Node> route);
         public int AgvId { get; private protected set; }
         public AGVStates State { get; set; }
@@ -36,7 +37,24 @@ namespace ShrimpFlourControl.Vehicles
         public float Runtime { get; set; } //AGV運行時間，用來算稼動率，runtime/程式運行時間
 
         public bool IsOccupied { get; set; }
-
+        public int MissionId { get; set; }
+        public List<string> MessageHistory { get; set; } = new List<string>();
+        public void AddMessage(string msg)
+        {
+            MessageHistory.Add(DateTime.Now.ToString("HH:mm:ss.fff") + " " + msg);
+            AppendTextBox(msg);
+            
+        }
+        public TextBox textBox { get; set; }
+        public void AppendTextBox(string value)
+        {
+            if (textBox.InvokeRequired)
+            {
+                textBox.Invoke(new Action<string>(AppendTextBox), new object[] { value });
+                return;
+            }
+            textBox.AppendText(value + Environment.NewLine);
+        }
         public abstract bool LoadWorkPiece();
         public abstract bool UnloadWorkPiece();
         //public abstract void Move(Node destinateNode, AGV selectAGV);

@@ -55,6 +55,7 @@ namespace ShrimpFlourControl.Missions
         public void AssignAGV(AGV agv)
         {
             this.AssignedAGV = agv;
+            this.AssignedAGV.MissionId = this.MissionId;
         }
         //public Station CurrentStation { get; set; }
         //public Station NextStation { get; set; }

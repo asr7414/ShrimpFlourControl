@@ -22,7 +22,7 @@ namespace ShrimpFlourControl
 
         public List<Node> Nodes { get; private set; }
         public List<Path> Paths { get; private set; }
-        public List<AGV> AGVs { get; private set; }
+        public List<AGV> AGVs { get;  set; }
         public List<Station> Stations { get; private set; }
         public Station MaterialStation { get { return Stations.Where(s => s.StationId == 0).FirstOrDefault(); } }
         public Station FinishedStation { get { return Stations.Where(s => s.StationId == 6).FirstOrDefault(); } }

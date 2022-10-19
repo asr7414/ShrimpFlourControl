@@ -49,7 +49,14 @@ namespace ShrimpFlourControl.Stations
             this.Type = type;
             this.Remark = remark;
         }
-        public abstract bool StartProcessing(Mission mission);
+        public bool StartProcessing(Mission mission)
+        {
+            this.Status = StationStatus.Processing;
+            System.Threading.Thread.Sleep(mission.ProductOperaction.OperactionTime * 1000);
+            this.ReservedMissionList.RemoveAt(0);
+            this.Status = StationStatus.ProcessingDone;
+            return true;
+        }
         public Point GetStationSize()
         {
             Point pt = new Point();
